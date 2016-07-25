@@ -1,0 +1,42 @@
+<h1 id="posttitle"><%= @post.title %></h1>
+<p>
+    <strong><div id="postcontent"><%= @post.content %></div></strong>
+</p>
+  <br><br>
+<% @post.comments.order(created_at: :desc).each do |comment| %>
+    <fieldset>
+      <p>
+        <legend id="legend"><%= comment.user.name %><span id="commenter"> says</span></legend>   
+      </p>
+      <p>
+        <div class="commentcontent">"<%= comment.content %>"</div>  
+      </p>  
+      <% if comment.user_id == current_user.id %>
+        <%= link_to 'Destroy Comment', [comment.post, comment],
+            method: :delete,
+            data: { confirm: 'Are you sure?' } %> | <%= link_to 'Reply', '#' %>
+      <% else %>
+        <%= link_to 'Reply', '#' %>
+      <% end %>  
+      <%= form_for([comment, comment.replies.build]) do |f| %>
+        <%= f.label :content %><br/>
+        <%= f.text_area :content, class: 'form-control' %><br>
+        <%= f.submit class:"btn btn-primary" %>
+      <% end %> 
+      <h5>Replies</h5>
+      <% comment.replies.each do |reply| %>
+      <p>
+        <strong><%= reply.comment.user.name %></strong>  
+      </p>
+      <p>
+        <%= reply.content %>  
+      </p>
+      <% if reply.user_id == current_user.id %>
+        <%= link_to 'Destroy Reply', [reply.comment, reply],
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %>
+      <% end %>
+    <% end %>    
+  </fieldset>
+<% end %>  
+

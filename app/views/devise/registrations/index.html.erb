@@ -1,0 +1,24 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>User</th>
+      <td colspan="3"></td>
+      <th>Email-Id</th>
+      <td colspan="3"></td>
+      <th>Facebook Profile</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |post| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td colspan="3"></td>
+        <td><%= user.email %></td>
+        <td colspan="3"></td>
+        <td><%= user.fb_profile %></td>
+        <td><%= link_to 'Show', user.posts %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

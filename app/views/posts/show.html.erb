@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= render 'show_posts' %>
+    <h5>Add a comment:</h5>
+    <%= form_for([@post, @post.comments.build]) do |f| %>
+      <%= f.label :content %><br/>
+      <%= f.text_area :content, class: 'form-control' %><br>
+      <%= f.submit class:"btn btn-primary" %>
+    <% end %>
+    <%= link_to 'Edit', edit_post_path(@post) %> |
+      <%= link_to 'Back', posts_path %>
+    </div>
+</div>
+
+
