@@ -7,14 +7,18 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<%= render 'layouts/header' %>
-<% if current_user %>
-  <%= render 'layouts/leftnav' %>  
-<% end %>
-<% if user_signed_in? %>
-	<p> Hello, <%= current_user.name %> <%= link_to "Sign out", destroy_user_session_path, :method => 'delete' %> </p>
-	<br>
-<% end %>
-<%= yield %>
+	<div class="row">
+	  <div class="col-md-6 col-md-offset-3">
+			<%= render 'layouts/header' %>
+			<% if current_user %>
+			  <%= render 'layouts/leftnav' %>  
+			<% end %>
+			<% if user_signed_in? %>
+				<p> Hello, <%= current_user.name %> <%= link_to "Sign out", destroy_user_session_path, :method => 'delete' %> </p>
+				<br>
+			<% end %>
+			<%= yield %>
+		</div>
+	</div>
 </body>
 </html>

@@ -1,34 +1,31 @@
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <h1 id="posttitle">Listing All Posts</h1>
-    <table class="table table-hover">
-      <thead>
-        <tr>
+<h1 id="posttitle">Listing All Posts</h1>
+  <table class="table table-hover">
+    <thead>
+      <tr>
           <th>Title</th>
           <td colspan="3"></td>
           <th>Posted By</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @posts.each do |post| %>
-          <tr>
-            <td><%= post.title %></td>
-            <td colspan="3"></td>
-            <td>
-              <% if post.user_id != current_user.id %>
-                <%= post.posted_by %>
-              <% else %>
-                <%= 'me' %>
-              <% end %>
-            </td>
-            <td><%= link_to 'Show', post %></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <td><%= post.title %></td>
+          <td colspan="3"></td>
+          <td>
+            <% if post.user_id != current_user.id %>
+              <%= post.posted_by %>
+            <% else %>
+              <%= 'me' %>
+            <% end %>
+          </td>
+          <td><%= link_to 'Show', post %></td>
             <% if post.user_id == current_user.id %>
               <td><%= link_to 'Edit', edit_post_path(post) %></td>
               <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             <% end %>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
