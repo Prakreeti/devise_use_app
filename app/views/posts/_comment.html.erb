@@ -1,0 +1,17 @@
+<% l = comment.level*20 %>
+<div id="replycontent" style="margin-left: <%= l %>px;">
+<div>
+    <strong><%= comment.user.name %></strong> -- <%= comment.content %>
+  </div>
+  <div id="replydelete">
+    <%= link_to "Reply", post_comment_path(comment.post, comment) %> |
+    <% if comment.user_id == current_user.id %>
+      <%= link_to 'Delete', [comment.post, comment],
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %>
+    <% end %>
+    
+    <span id="timeago"><%= time_ago_in_words(comment.created_at) %> ago</span>
+  </div> 
+</div>
+    

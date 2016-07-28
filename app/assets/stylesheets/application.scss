@@ -171,7 +171,7 @@
     font-family:courier;
 }
 #postcontent{
-    border: solid 0.5px #e0e0d1;
+    border: solid 0.5px #B2D9E9;
     border-radius: 10px;
     padding: 5px;
 }
@@ -184,4 +184,18 @@
 }
 .navbar-right{
     background-color: black;
+}
+#replycontent{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px #e0e0d1 dashed;
+    border-radius: 5px;   
+}
+#replydelete{
+    font-size: small;
+}
+#timeago{
+    color: #AFB4B7;
 }

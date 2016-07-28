@@ -63,7 +63,6 @@ class PostsController < ApplicationController
   end
 
   def myblogs
-     #@posts= Post.where('user_id' => current_user)
      @posts=current_user.posts
   end
 

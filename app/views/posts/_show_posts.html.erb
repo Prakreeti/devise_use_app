@@ -3,21 +3,31 @@
     <strong><div id="postcontent"><%= @post.content %></div></strong>
 </p>
 <% @post.comments.order(created_at: :desc).each do |comment| %>
-    <fieldset>
-    <% if !comment.reply_to %>
-      <p>
-        <legend id="legend"><%= comment.user.name %><span id="commenter"> says</span></legend>   
-      </p>
-      <div class="commentcontent">"<%= comment.content %>"</div> 
-      <% if comment.user_id == current_user.id %>
-        <%= link_to 'Destroy Comment', [comment.post, comment],
-            method: :delete,
-            data: { confirm: 'Are you sure?' } %> 
-      <% end %> 
-      <%= link_to "Reply", post_comment_path(comment.post, comment) %>  
+  <% if !comment.reply_to %>
+    <div id="replycontent">
+      <strong><%= comment.user.name %></strong> -- <span class="commentcontent">"<%= comment.content %>"</span>
+      <div id="replydelete">
+        <%= link_to "Reply", post_comment_path(comment.post, comment) %> |
+        <% if comment.user_id == current_user.id %>
+          <%= link_to 'Destroy', [comment.post, comment],
+                method: :delete,
+                data: { confirm: 'Are you sure?' } %> 
+        <% end %>
+        <span id="timeago"><%= time_ago_in_words(comment.created_at) %> ago</span>
+      </div>     
+    </div>
+    <% def tree_traversing(c) %>
+      <% comments = Comment.where("reply_to" => c.id) %>
+      <% comments.each do |comment| %>
+        <%= render partial: "comment", locals: {comment: comment} %>
+        <% if(comment.children_count > 0) %>
+          <% tree_traversing(comment) %>
+        <% end %>
+      <% end %>
     <% end %>
-    </fieldset>
-
-
+    <% if(comment.children_count > 0) %>
+      <% tree_traversing(comment) %>
+    <% end %>  
+  <% end %>
 <% end %>  
 

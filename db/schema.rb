@@ -11,16 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160724102050) do
+ActiveRecord::Schema.define(version: 20160726070250) do
 
   create_table "comments", force: :cascade do |t|
-    t.text     "content",    limit: 65535
-    t.integer  "post_id",    limit: 4
-    t.integer  "user_id",    limit: 4
+    t.text     "content",        limit: 65535
+    t.integer  "post_id",        limit: 4
+    t.integer  "user_id",        limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "reply_to",   limit: 4
-    t.integer  "base_reply", limit: 4
+    t.integer  "reply_to",       limit: 4
+    t.integer  "base_reply",     limit: 4
+    t.integer  "level",          limit: 4,     default: 0
+    t.integer  "children_count", limit: 4,     default: 0
   end
 
   add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree

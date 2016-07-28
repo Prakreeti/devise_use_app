@@ -1,37 +1,16 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <% @post.comments.order(created_at: :desc).each do |c| %>
-      <% if c.reply_to == @comment.id %>
-        <p> 
-          <strong><%= c.user.name %></strong>  
-        </p>
-       	<p>
-         	<%= c.content %>	
-        </p>   
-        <br>
-    	  <% if c.user_id == current_user.id %>
-        	 <%= link_to 'Destroy', [c.post, c],
-                method: :delete,
-                data: { confirm: 'Are you sure?' } %>
-        <% end %>
-        <br>
-        <%= link_to "Reply", post_comment_path(c.post, c) %>
-        <br>
-      <% end %>
-    <% end %>
-
   	<h5>Add a reply:</h5>
-
   	<%= form_for([@post, @post.comments.build]) do |f| %>
       <%= f.hidden_field :reply_to, :value => @comment.id %>
+      <%= f.hidden_field :level, :value => @comment.level + 1 %>
       <% if !@comment.base_reply %>
           <%= f.hidden_field :base_reply, :value => @comment.id %>
       <% else %>
           <%= f.hidden_field :base_reply, :value => @comment.base_reply %>
       <% end %>   
-  		<%= f.label :content %><br />
-  		<%= f.text_area :content, class: 'form-control' %>
+  		<%= f.text_area :content, class: 'form-control' %><br>
   		<%= f.submit class:"btn btn-primary" %>
   	<% end %>
   </div>
-  </div>
+</div>
