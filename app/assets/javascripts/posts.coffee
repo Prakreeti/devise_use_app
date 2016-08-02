@@ -1,3 +1,7 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+$(document).ready ->
+	$('.comment-reply').on 'click', ->
+		$("#replies_" + ($(this).attr('id').split "_")[1]).toggle()
+
+	$('.replyto').on 'click', ->
+		$("#repliesto_" + ($(this).attr('id').split "_")[1]).show()
+		

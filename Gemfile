@@ -25,6 +25,11 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 #devise gem
 gem 'devise'
+#for omniauthable
+gem 'omniauth-facebook'
+#for pagination
+gem 'will_paginate',           '3.1.0'
+gem 'bootstrap-will_paginate', '0.0.10'
 
 
 # Use ActiveModel has_secure_password
@@ -39,6 +44,8 @@ gem 'devise'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'pry'
+  gem 'pry-nav'
 end
 
 group :development do

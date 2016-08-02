@@ -6,9 +6,7 @@ Rails.application.routes.draw do
   
   root 'dashboard#index'
   get '/post/myblogs', to: 'posts#myblogs'
-  get '/display_users', to: 'display_users#index'
-  devise_for :users, controllers: { registrations: 'registrations',}
-
+  devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: "users/omniauth_callbacks" }
   resources :users, only: [:index, :edit, :update]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

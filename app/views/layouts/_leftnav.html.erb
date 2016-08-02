@@ -13,7 +13,8 @@
         <%= link_to "All Blogs(#{Post.count})", posts_path %> 
       </li>
       <li>
-        <%= link_to "My Blogs(#{current_user.posts.count})", post_myblogs_path %>    </li>
+        <%= link_to "My Blogs(#{current_user.posts.count})", post_myblogs_path %>
+      </li>
       <li>
         <%= link_to "My Facebook Profile", current_user.fb_profile %> 
       </li>

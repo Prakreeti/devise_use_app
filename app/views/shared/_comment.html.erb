@@ -1,0 +1,27 @@
+<div style=" margin-left: <%= l %>px; ">
+  <% if l == 0 %>
+    <% l = 50 %>
+  <% end %>
+  <% comments.each do |comment| %>
+    <div class="replycontent">    
+      <strong><%= comment.user.name %></strong> -- "<%= comment.content %>"
+        <div>
+          <%= link_to "Reply", post_comment_path(comment.post, comment) %>
+          <% if comment.user_id == current_user.id %>
+            <span> | <%= link_to 'Destroy', [comment.post, comment],
+                method: :delete,
+                data: { confirm: 'Are you sure?' } %>    
+            </span>
+          <% end %>
+          <span id="timeago">  <%= time_ago_in_words(comment.created_at) %> ago
+            <% if (comment.children_count > 0) %>
+            <%= link_to "All Replies", "javascript:void(0);", id: "comment_#{comment.id}", class: "comment-reply"%>
+          </span>
+          <% end %>
+        </div>
+    </div>
+    <div class="replies" id="<%= "replies_#{comment.id}"%>" >
+      <%= render partial: "shared/comment", locals: {comments: comment.children, l: l * 0.9} %>
+    </div>
+  <% end %>
+</div> 

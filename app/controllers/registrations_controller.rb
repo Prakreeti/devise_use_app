@@ -1,6 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
 	def index
-		@users = User.all? 
+		@users = User.all 
 	end
 	private
 	def sign_up_params

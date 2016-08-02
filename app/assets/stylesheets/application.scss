@@ -11,10 +11,17 @@
  * file per style scope.
  *
  */
+
  @import "bootstrap-sprockets";
  @import "bootstrap";
+
  body {
-    overflow-x: hidden;
+
+    background: url() no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
  }
 
  #logo {
@@ -42,12 +49,7 @@
     transition: all 0.5s ease;
 }
 
-#wrapper.toggled {
-    padding-left: 250px;
-}
-
 #sidebar-wrapper {
-    z-index: 1000;
     position: fixed;
     left: 250px;
     width: 0;
@@ -61,35 +63,18 @@
     transition: all 0.5s ease;
 }
 
-#wrapper.toggled #sidebar-wrapper {
-    width: 250px;
-}
-
-#page-content-wrapper {
-    width: 100%;
-    position: absolute;
-    padding: 30px;
-}
-
-#wrapper.toggled #page-content-wrapper {
-    position: absolute;
-    margin-right: -250px;
-}
-
 /* Sidebar Styles */
 
 .sidebar-nav {
     position: absolute;
-    top: 0;
     width: 250px;
-    margin: 0;
     padding-left: 30px;
     padding-top: 80px;
     list-style: none;
 }
 
 .sidebar-nav li {
-    text-indent: 20px;
+    text-indent: 10px;
     line-height: 40px;
 }
 
@@ -112,7 +97,7 @@
 
 .sidebar-nav > .sidebar-brand {
     height: 65px;
-    font-size: 18px;
+    font-size: 40px;
     line-height: 60px;
 }
 
@@ -165,10 +150,6 @@
  }
 #username{
     color: white;
-    
-}
-#legend{
-    font-family:courier;
 }
 #postcontent{
     border: solid 0.5px #B2D9E9;
@@ -185,12 +166,12 @@
 .navbar-right{
     background-color: black;
 }
-#replycontent{
+.replycontent{
     margin-top: 5px;
     margin-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    border: 1px #e0e0d1 dashed;
+    border: 1px #929698 dashed;
     border-radius: 5px;   
 }
 #replydelete{
@@ -199,3 +180,7 @@
 #timeago{
     color: #AFB4B7;
 }
+.replies{
+    display: none;
+}
+
