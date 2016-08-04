@@ -19,6 +19,12 @@
         <%= link_to "My Facebook Profile", current_user.fb_profile %> 
       </li>
       <li>
+        <%= link_to "My Friends(#{current_user.friends.count})", friends_path %>
+      </li>
+      <li>
+        <%= link_to "All Pending Friend Requests", friend_requests_path %> 
+      </li>
+      <li>
         <a href="#">About</a>
       </li>
       <li>

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :friend_requests
+  resources :friends
   resources :posts do
     resources :comments 
   end
@@ -7,7 +9,8 @@ Rails.application.routes.draw do
   root 'dashboard#index'
   get '/post/myblogs', to: 'posts#myblogs'
   devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: "users/omniauth_callbacks" }
-  resources :users, only: [:index, :edit, :update]
+  resources :users, only: [:index, :edit, :update, :show]
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
