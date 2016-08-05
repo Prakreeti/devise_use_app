@@ -10,20 +10,27 @@
        <%= link_to "Dashboard", root_path %>      
       </li>
       <li>
+        <%= link_to "My Profile", user_path(current_user) %>
+      </li>
+      <li>
         <%= link_to "All Blogs(#{Post.count})", posts_path %> 
       </li>
       <li>
         <%= link_to "My Blogs(#{current_user.posts.count})", post_myblogs_path %>
       </li>
       <li>
-        <%= link_to "My Facebook Profile", current_user.fb_profile %> 
+        <%= link_to "Followers(#{current_user.followers.count})", '#' %> 
+      </li>
+      <li>
+        <%= link_to "Following(#{current_user.follows.count})", users_path %> 
       </li>
       <li>
         <%= link_to "My Friends(#{current_user.friends.count})", friends_path %>
       </li>
       <li>
-        <%= link_to "All Pending Friend Requests", friend_requests_path %> 
+        <%= link_to "Pending Requests(#{FriendRequest.where("friend" => current_user).count})", friend_requests_path %> 
       </li>
+      
       <li>
         <a href="#">About</a>
       </li>

@@ -1,0 +1,13 @@
+<h1 id="posttitle">Your followers</h1>
+<table class="table table-hover">
+	<thead>
+		<th>Name</th>
+	</thead>
+		<tbody>
+			<% @followed.each do |user| %>
+				<tr>
+					<td><%= link_to "#{user.name}", user_path(user) %></td>
+				</tr>
+			<% end %>
+		</tbody>
+</table>

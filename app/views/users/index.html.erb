@@ -12,16 +12,34 @@
     <% @users.each do |user| %>
       <tr>
         <td colspan="10"><%= user.username %></td>
-        <td colspan="10"><%= user.name %></td>
+        <td colspan="10"><%= link_to "#{user.name}", user_path(user) %></td>
         <td colspan="10"><%= user.city %></td>
         <td colspan="10"><%= link_to user.fb_profile, user.fb_profile %></td>
-        <% if user != current_user && (current_user.friendships.where("friend_id" => user).count == 0) && (current_user.friend_requests.where("friend_id" => user).count == 0) %>
-          <td><span class="glyphicon glyphicon-user"><%= link_to "+", friend_requests_path(:friend_id => user),method: :post %></td>
-        <% elsif current_user.friend_requests.where("friend_id" => user).count != 0  %>
-          <% request = current_user.friend_requests.find_by(:friend_id => user.id) %>
-          <td><%= link_to "Remove Request", friend_request_path(request), method: :delete %></td>
-        <% elsif user != current_user && current_user.friends.where("friend_id" => user) %>
-          <td><span class="glyphicon glyphicon-user"></td>
+        <% if user != current_user %> 
+          <% if !current_user.friends.include?(user) && (current_user.friend_requests.find_by(:friend_id => user) == nil) %>
+            <td>
+              <span class="glyphicon glyphicon-user"><%= link_to "+", friend_requests_path(:friend_id => user),method: :post %>
+            </td>
+          <% elsif current_user.friend_requests.include?(user) %>
+            <% request = current_user.friend_requests.find_by(:friend_id => user.id) %>
+            <td>
+              <%= link_to "Remove Request", friend_request_path(request), method: :delete %>
+            </td>
+          <% elsif current_user.friends.include?(user) %>
+            <td>
+              <span class="glyphicon glyphicon-user">
+            </td>
+          <% end %>
+          <% if !current_user.follows.include?(user) %>
+            <td>
+              <%= link_to "Follow", follow_relationships_path(:follow_id => user),method: :post %>
+            </td>
+          <% else %>
+            <% relationship = current_user.follow_relationships.find_by(:follow_id => user.id) %>
+            <td>
+              <%= link_to "Unfollow", follow_relationship_path(relationship) , method: :delete%>
+            </td>
+          <% end %>
         <% end %>
       </tr>
     <% end %>

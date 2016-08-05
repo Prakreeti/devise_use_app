@@ -4,13 +4,8 @@ class FriendRequestsController < ApplicationController
   def create
     friend = User.find(params[:friend_id])
     @friend_request = current_user.friend_requests.new(friend: friend)
-    if @friend_request.save
-      flash[:notice] = "Friend Request Sent"
-      redirect_to users_path
-    else
-      flash[:notice] = "Friend Request Not Sent"
-      redirect_to users_path
-    end
+    @friend_request.save
+    redirect_to users_path
  	end
 
  	def index

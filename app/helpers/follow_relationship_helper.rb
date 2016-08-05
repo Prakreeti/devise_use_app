@@ -1,0 +1,2 @@
+module FollowRelationshipHelper
+end

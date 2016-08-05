@@ -5,7 +5,10 @@ class User < ActiveRecord::Base
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
   has_many :friend_requests, dependent: :destroy
-
+  has_many :follow_relationships, dependent: :destroy
+  has_many :follows, through: :follow_relationships
+  has_many :followers,through: :follow_relationships
+  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable,
          :omniauthable, :omniauth_providers => [:facebook]

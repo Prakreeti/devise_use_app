@@ -1,0 +1,13 @@
+<h1 id="posttitle">You are following</h1>
+<table class="table table-hover">
+	<thead>
+		<th>Name</th>
+	</thead>
+	<tbody>
+		<% @following.each do |user| %>
+			<tr>
+				<td><%= link_to "#{user.name}", user_path(user) %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

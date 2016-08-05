@@ -1,10 +1,32 @@
-
-<p>Username: <%= @user.name %></p>
-<p><%= link_to "Find Friends", users_path %></p>
-
-<h2>Your Friends</h2>
-<ul>
-  <% for user in @user.friends %>
-  <li><%=  user.username %></li>
-  <% end %>  
-</ul>
+<h1 id="posttitle"><%= @user.name %></h1>
+<%= link_to "Followers(#{@user.followers.count})", '#' %>
+<%= link_to "Following(#{@user.follows.count})", '#' %>
+<% if @user == current_user %>
+	<p><%= link_to "Find Friends", users_path %></p>
+<% else %>
+	<% if !current_user.friends.include?(@user) %>
+		<p><%= link_to "Add Friend", friend_requests_path(:friend_id => @user),method: :post%></p>
+	<% else %>
+		<p><%= link_to "Remove Friend", friend_path(@user), method: :delete %></p>
+	<% end %>
+	<% if !current_user.follows.include?(@user) %>
+		<p><%= link_to "Follow", follow_relationships_path(:follow_id => @user),method: :post%></p>
+	<% else %>
+		<% relationship = current_user.follow_relationships.find_by(:follow_id => @user.id) %>
+		<p><%= link_to "Unfollow", follow_relationship_path(relationship) , method: :delete %></p>
+	<% end %>
+<% end %>
+<table class="table table-hover">
+<thead>
+		<th>Post</th>
+		<th>Created at</th>
+<thead>
+<% @user.posts.each do |post|%>
+	<tbody>
+		<tr>
+			<td><%= post.title %></td>
+			<td><%= post.created_at %></td>
+		</tr>
+	</tbody>
+<% end %>
+</table>
