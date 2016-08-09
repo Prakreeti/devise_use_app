@@ -30,6 +30,11 @@ gem 'omniauth-facebook'
 #for pagination
 gem 'will_paginate',           '3.1.0'
 gem 'bootstrap-will_paginate', '0.0.10'
+#for uploading images
+gem 'paperclip', '~> 4.1'
+#for rating
+gem 'ratyrate'
+
 
 
 # Use ActiveModel has_secure_password

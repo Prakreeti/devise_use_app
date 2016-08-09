@@ -2,7 +2,7 @@
 <%= will_paginate %>
 <table class="table table-hover">
   <thead>
-    <th colspan="10">Username</th> 
+    <th colspan="10"></th> 
     <th colspan="10">Name</th>   
     <th colspan="10">City</th> 
     <th colspan="10">Facebook Profile Link</th>
@@ -11,16 +11,20 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td colspan="10"><%= user.username %></td>
+        <td colspan="10">
+          <div class="round-image-50">
+            <%= image_tag(user.avatar.url(:thumb)) %>
+          </div>
+        </td>
         <td colspan="10"><%= link_to "#{user.name}", user_path(user) %></td>
         <td colspan="10"><%= user.city %></td>
         <td colspan="10"><%= link_to user.fb_profile, user.fb_profile %></td>
         <% if user != current_user %> 
-          <% if !current_user.friends.include?(user) && (current_user.friend_requests.find_by(:friend_id => user) == nil) %>
+          <% if !current_user.friends.include?(user) && (current_user.friend_requests.find_by(:friend_id => user) == nil) && !(current_user.pending_requests.include?(user)) %>
             <td>
               <span class="glyphicon glyphicon-user"><%= link_to "+", friend_requests_path(:friend_id => user),method: :post %>
             </td>
-          <% elsif current_user.friend_requests.include?(user) %>
+          <% elsif current_user.friend_requests.find_by(:friend_id => user) %>
             <% request = current_user.friend_requests.find_by(:friend_id => user.id) %>
             <td>
               <%= link_to "Remove Request", friend_request_path(request), method: :delete %>
@@ -32,12 +36,12 @@
           <% end %>
           <% if !current_user.follows.include?(user) %>
             <td>
-              <%= link_to "Follow", follow_relationships_path(:follow_id => user),method: :post %>
+              <%= link_to "Follow", relationships_path(:followed_id => user), method: :post  %>
             </td>
           <% else %>
-            <% relationship = current_user.follow_relationships.find_by(:follow_id => user.id) %>
+            <% relationship = current_user.follow_relationships.find_by(:followed_id => user) %>
             <td>
-              <%= link_to "Unfollow", follow_relationship_path(relationship) , method: :delete%>
+              <%= link_to "Unfollow",relationship_path(relationship), method: :delete %>
             </td>
           <% end %>
         <% end %>
@@ -46,12 +50,3 @@
   </tbody>
 </table>
 <%= will_paginate %>
-
-
-
-
-
-
-
-
-

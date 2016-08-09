@@ -10,7 +10,7 @@
 				<%= User.find_by(:id => friend.id).name %>
 			</td>
 			<td>
-				<%= link_to "-", friend_path(friend), :method => :delete %><span class="glyphicon glyphicon-user">
+				<span class="glyphicon glyphicon-user"><%= link_to "-", friend_path(friend), :method => :delete %></span>
 			</td>
 		</tr>
 	<% end %>

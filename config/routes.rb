@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post '/rate' => 'rater#create', :as => 'rate'
   resources :follow_relationships
   resources :friend_requests
   resources :friends
@@ -7,11 +8,17 @@ Rails.application.routes.draw do
   end
 
   
-  root 'dashboard#index'
+  root 'users#dashboard'
   get '/post/myblogs', to: 'posts#myblogs'
   devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: "users/omniauth_callbacks" }
-  resources :users
-  
+  resources :users do
+    member do
+      get :follows, :followers
+    end
+  end
+  resources :relationships, only: [:create, :destroy]
+  resources :likes
+  resources :comment_likes
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

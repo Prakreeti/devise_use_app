@@ -5,9 +5,25 @@ class User < ActiveRecord::Base
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
   has_many :friend_requests, dependent: :destroy
-  has_many :follow_relationships, dependent: :destroy
-  has_many :follows, through: :follow_relationships
-  has_many :followers,through: :follow_relationships
+  has_many :pending_requests, through: :friend_requests, source: :friend
+  has_many :follow_relationships, class_name: "Relationship",
+                               foreign_key: "follower_id", dependent: :destroy
+  has_many :followed_relationships,  class_name: "Relationship",
+                               foreign_key: "followed_id", dependent: :destroy
+  has_many :follows, through: :follow_relationships, source: :followed
+  has_many :followers,through: :followed_relationships, source: :follower
+
+  has_many :likes, dependent: :destroy
+  has_many :likes_post, through: :likes,
+                        source: :post, dependent: :destroy
+                        
+  has_many :comment_likes, dependent: :destroy
+  has_many :likes_comment, through: :comment_likes,
+                           source: :comment, dependent: :destroy
+
+  has_attached_file :avatar, styles: { medium: "300x300", thumb: "100x100" }
+
+  ratyrate_rater
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable,
@@ -41,4 +57,23 @@ class User < ActiveRecord::Base
     end
   end
 
+  def follow(other_user)
+    follow_relationships.create(followed_id: other_user.id)
+  end
+
+  def unfollow(other_user)
+    follow_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  def feed
+    follow_ids = "SELECT followed_id FROM relationships
+                     WHERE  follower_id = :user_id"
+    Post.where("user_id IN (#{follow_ids})
+                     OR user_id = :user_id", user_id: id)
+  end
+
+  has_attached_file :avatar, :styles => { :medium => "300x300>",
+                                          :thumb => "100x100#" },
+                                :default_url => "/images/:style/missing.png"
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 end

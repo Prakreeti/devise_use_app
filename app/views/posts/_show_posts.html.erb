@@ -1,9 +1,0 @@
-<h1 id="posttitle"><%= @post.title %></h1>
-<p>
-    <strong><div id="postcontent"><%= @post.content %></div></strong>
-</p>
-<h3>Comments:</h3>
-<% comments =  @post.comments.where("reply_to" => nil)%>
-<%= render partial: "shared/comment", locals: {comments: comments, l: 0} %>
-
-

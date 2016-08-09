@@ -2,7 +2,6 @@
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
       <ul>
       <% @post.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -18,6 +17,9 @@
   <div class="field">
     <%= f.label :content %><br>
     <%= f.text_area :content, class: "form-control input-lg" %>
+  </div><br>
+  <div>
+     <%= f.file_field :image %>
   </div><br>
   <div class="actions">
     <%= f.submit "Post", class: "input-lg btn btn-primary" %>
