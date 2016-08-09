@@ -15,4 +15,5 @@
 //= require bootstrap-sprockets
 //= require jquery.raty
 //= require ratyrate
+//= require tinymce-jquery
 //= require_tree .

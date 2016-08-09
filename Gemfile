@@ -34,6 +34,8 @@ gem 'bootstrap-will_paginate', '0.0.10'
 gem 'paperclip', '~> 4.1'
 #for rating
 gem 'ratyrate'
+#for WYSIWYG
+gem 'tinymce-rails'
 
 
 

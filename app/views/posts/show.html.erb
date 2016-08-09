@@ -1,6 +1,7 @@
+<%= tinymce_assets %>
 <h1 id="posttitle"><%= @post.title %></h1>
 <p>
-  <strong><div id="postcontent"><%= @post.content %></div></strong>
+  <strong><div id="postcontent"><%= @post.content.html_safe %></div></strong>
   <div id="postimage">
   	<%= link_to image_tag(@post.image.url(:large)), @post.image.url %>
   </div>
@@ -42,6 +43,7 @@
 	<%= link_to 'Edit', edit_post_path(@post) %> |
 <% end %>
 <%= link_to 'Back', posts_path %>
+<%= tinymce %>
   
 
 
