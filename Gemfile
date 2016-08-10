@@ -36,6 +36,8 @@ gem 'paperclip', '~> 4.1'
 gem 'ratyrate'
 #for WYSIWYG
 gem 'tinymce-rails'
+#for location
+gem 'geokit-rails'
 
 
 

@@ -15,4 +15,5 @@ class Post < ActiveRecord::Base
 	 															 "image/gif"] }
 	 									
 	ratyrate_rateable "content"
+	
 end

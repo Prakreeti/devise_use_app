@@ -1,49 +1,53 @@
 <%= tinymce_assets %>
-<h1 id="posttitle"><%= @post.title %></h1>
-<p>
-  <strong><div id="postcontent"><%= @post.content.html_safe %></div></strong>
-  <div id="postimage">
-  	<%= link_to image_tag(@post.image.url(:large)), @post.image.url %>
-  </div>
-  
-</p>
-<div id="rating">
-	<%= rating_for @post, 'content', enable_half: true, half_show: true,cancel: true %>
-</div>	
-<% if @post.likes.count != 0 %>
-	<%= link_to "#{@post.likes.count} Likes",'#' %> |
-<% end %>
-<% if !@post.liked_by.include?(current_user) %>
-	<span class="glyphicon glyphicon-thumbs-up">
-	<%= link_to "Like", likes_path(:post_id => @post),method: :post %>
-	</span> 
-<% else %>
-	<% like = current_user.likes.find_by(:post_id => @post) %>
-	<span class="glyphicon glyphicon-thumbs-down">
-		<%= link_to "Unlike", like_path(like),method: :delete %>
-	</span>
-<% end %>
-<% if @post.user_id = current_user %>
-	<div>
-		<%= link_to 'Edit', edit_post_path(@post) %> |
-		<%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' } %>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<h1 id="posttitle"><%= @post.title %></h1>
+		<p>
+		  <strong><div id="postcontent"><%= @post.content.html_safe %></div></strong>
+		  <div id="postimage">
+		  	<%= link_to image_tag(@post.image.url(:large)), @post.image.url %>
+		  </div>
+		  
+		</p>
+		<div id="rating">
+			<%= rating_for @post, 'content', enable_half: true, half_show: true,cancel: true %>
+		</div>	
+		<% if @post.likes.count != 0 %>
+			<%= link_to "#{@post.likes.count} Likes",'#' %> |
+		<% end %>
+		<% if !@post.liked_by.include?(current_user) %>
+			<span class="glyphicon glyphicon-thumbs-up">
+			<%= link_to "Like", likes_path(:post_id => @post),method: :post %>
+			</span> 
+		<% else %>
+			<% like = current_user.likes.find_by(:post_id => @post) %>
+			<span class="glyphicon glyphicon-thumbs-down">
+				<%= link_to "Unlike", like_path(like),method: :delete %>
+			</span>
+		<% end %>
+		<% if @post.user_id = current_user %>
+			<div>
+				<%= link_to 'Edit', edit_post_path(@post) %> |
+				<%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' } %>
+			</div>
+		<% end %>
+		<h3>Comments:</h3>
+		<% comments =  @post.comments.where("reply_to" => nil)%>
+		<%= render partial: "shared/comment", locals: {comments: comments, l: 0, post: @post} %>
+
+
+		<h5>Add a comment:</h5>
+		<%= form_for([@post, @post.comments.build]) do |f| %>
+		  <%= f.text_area :content, class: 'form-control' %><br>
+		  <%= f.submit class:"btn btn-primary" %>
+		<% end %>
+		<% if @post.user_id == current_user %>
+			<%= link_to 'Edit', edit_post_path(@post) %> |
+		<% end %>
+		<%= link_to 'Back', posts_path %>
+		<%= tinymce %>
 	</div>
-<% end %>
-<h3>Comments:</h3>
-<% comments =  @post.comments.where("reply_to" => nil)%>
-<%= render partial: "shared/comment", locals: {comments: comments, l: 0, post: @post} %>
-
-
-<h5>Add a comment:</h5>
-<%= form_for([@post, @post.comments.build]) do |f| %>
-  <%= f.text_area :content, class: 'form-control' %><br>
-  <%= f.submit class:"btn btn-primary" %>
-<% end %>
-<% if @post.user_id == current_user %>
-	<%= link_to 'Edit', edit_post_path(@post) %> |
-<% end %>
-<%= link_to 'Back', posts_path %>
-<%= tinymce %>
-  
+</div>
+		  
 
 

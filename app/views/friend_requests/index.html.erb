@@ -1,11 +1,15 @@
-<h1 id="posttitle">All Pending Friend Requests</h1>
-<table class="table table-hover">
-	<% @incoming.each do |request| %>
-		<tr>
-			<td><%= User.find_by(:id => request.user_id).name %></td>
-			<td><%= link_to "Accept", friend_request_path(request), method: :put %></td>
-			<td><%= link_to "Reject", friend_request_path(request), method: :delete  %></td>
-		</tr>
-	<% end %>
-</table>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<h1 id="posttitle">All Pending Friend Requests</h1>
+		<table class="table table-hover">
+			<% @incoming.each do |request| %>
+				<tr>
+					<td><%= User.find_by(:id => request.user_id).name %></td>
+					<td><%= link_to "Accept", friend_request_path(request), method: :put %></td>
+					<td><%= link_to "Reject", friend_request_path(request), method: :delete  %></td>
+				</tr>
+			<% end %>
+		</table>
+	</div>
+</div>
 

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'users#dashboard'
   post '/rate' => 'rater#create', :as => 'rate'
   resources :follow_relationships
   resources :friend_requests
@@ -6,9 +7,7 @@ Rails.application.routes.draw do
   resources :posts do
     resources :comments 
   end
-
   
-  root 'users#dashboard'
   get '/post/myblogs', to: 'posts#myblogs'
   devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: "users/omniauth_callbacks" }
   resources :users do
