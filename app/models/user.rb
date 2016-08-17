@@ -24,6 +24,9 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, styles: { medium: "300x300", thumb: "100x100" }
 
   ratyrate_rater
+
+  geocoded_by :address
+  after_validation :geocode
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable,
@@ -70,6 +73,9 @@ class User < ActiveRecord::Base
                      WHERE  follower_id = :user_id"
     Post.where("user_id IN (#{follow_ids})
                      OR user_id = :user_id", user_id: id)
+  end
+  def address
+    "#{city}"
   end
 
   has_attached_file :avatar, :styles => { :medium => "300x300>",

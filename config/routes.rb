@@ -1,23 +1,50 @@
 Rails.application.routes.draw do
+  
+  # for the home page
   root 'users#dashboard'
+
+  resources :subscribers
+  
   post '/rate' => 'rater#create', :as => 'rate'
-  resources :follow_relationships
+
   resources :friend_requests
   resources :friends
+
   resources :posts do
+    member do
+      get :liked_by
+    end
     resources :comments 
+    
   end
-  
+
+  post 'users/find_friends', to: 'users#find_friends'
+
   get '/post/myblogs', to: 'posts#myblogs'
-  devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: "users/omniauth_callbacks" }
+
+  resources :comments, only: :show do
+    member do
+      get :liked_by
+    end
+  end
+
+  
+  devise_for :users, controllers: { registrations: 'registrations',
+                     omniauth_callbacks: "users/omniauth_callbacks" }
+  
   resources :users do
     member do
       get :follows, :followers
     end
   end
+
   resources :relationships, only: [:create, :destroy]
+
   resources :likes
   resources :comment_likes
+
+  resources :tags, only: [:index, :show]
+  get 'tagged', to: 'posts#tagged'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -37,8 +37,11 @@ gem 'ratyrate'
 #for WYSIWYG
 gem 'tinymce-rails'
 #for location
-gem 'geokit-rails'
-
+gem 'geocoder'
+#for tagging
+gem 'acts-as-taggable-on'
+#for social sharing
+gem 'social-share-button'
 
 
 # Use ActiveModel has_secure_password

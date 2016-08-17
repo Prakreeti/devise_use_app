@@ -2,10 +2,12 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
+  #to display all posts with pagination
   def index
     @posts = Post.paginate(page: params[:page])
   end
 
+  #to show the content of each post
   def show
   end
 
@@ -13,9 +15,11 @@ class PostsController < ApplicationController
     @post = Post.new
   end
 
+  #to edit a post
   def edit
   end
 
+  #to create a new post
   def create
     @post = current_user.posts.new(post_params)
     @post.posted_by = current_user.name
@@ -30,6 +34,7 @@ class PostsController < ApplicationController
     end
   end
 
+  #to update a post
   def update
     respond_to do |format|
       if @post.update(post_params)
@@ -42,16 +47,32 @@ class PostsController < ApplicationController
     end
   end
 
+  #to destroy a post
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+      format.html { redirect_to posts_path, notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
+  #to show all posts of current user
   def myblogs
      @posts=current_user.posts
+  end
+
+  #to show posts with a certain tag
+  def tagged
+    if params[:tag].present? 
+      @posts = Post.tagged_with(params[:tag])
+    else 
+      @posts = Post.all
+    end  
+  end
+
+  def liked_by
+    post = Post.find(params[:id])
+    @users = post.liked_by
   end
 
   private
@@ -60,6 +81,6 @@ class PostsController < ApplicationController
     end
 
     def post_params
-      params.require(:post).permit(:title, :content, :image)
+      params.require(:post).permit(:title, :content, :image, :tag_list)
     end
 end

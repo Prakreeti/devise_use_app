@@ -1,3 +1,4 @@
+#over-riding the registrations controller of devise
 class RegistrationsController < Devise::RegistrationsController
 	def index
 		@users = User.all 

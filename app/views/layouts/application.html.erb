@@ -5,16 +5,16 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <link type="stylesheet/css" href="assets/stylesheets/animation.css">
 </head>
-<body>			
+<body>
+<div class="container-fluid">		
 	<%= render 'layouts/header' %>
 	<% if current_user %>
-		<%= render 'layouts/leftnav' %>  
-	<% end %>
-	<% if user_signed_in? %>
-		<p> Hello, <%= current_user.name %> <%= link_to "Sign out", destroy_user_session_path, :method => 'delete' %> </p>
-	<br>
+		<%= render 'layouts/leftnav' %>
 	<% end %>
 	<%= yield %>
+	<%= render 'layouts/background' %>
+</div>
 </body>
 </html>

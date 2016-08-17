@@ -1,15 +1,17 @@
 class RelationshipsController < ApplicationController
 	before_action :authenticate_user!
 
+  #to create a follow relationship
   def create
     user = User.find(params[:followed_id])
     current_user.follow(user)
-    redirect_to users_path
+    redirect_to :back
   end
 
+  #to stop following someone
   def destroy
     user = Relationship.find(params[:id]).followed
     current_user.unfollow(user)
-    redirect_to users_path
+    redirect_to :back
   end
 end

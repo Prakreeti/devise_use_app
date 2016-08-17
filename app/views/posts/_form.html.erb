@@ -18,6 +18,11 @@
     <%= f.label :content %>
     <%= f.text_area :content, class: "tinymce"  %>
   </div><br>
+  <div class="field">
+    <%= f.label :add_tags %>
+    <span class="glyphicon glyphicon-tag"></span>
+    <%= f.text_field :tag_list, class: "form-control" %>
+  </div><br>
   <div>
      <%= f.file_field :image %>
   </div><br>

@@ -1,4 +1,6 @@
 class Post < ActiveRecord::Base
+	after_create :send_email_to_subscribers
+
 	belongs_to :user
 	has_many :comments, dependent: :destroy
 	has_many :nested_comments, through: :comments, source: :children
@@ -15,5 +17,15 @@ class Post < ActiveRecord::Base
 	 															 "image/gif"] }
 	 									
 	ratyrate_rateable "content"
+
+	acts_as_taggable_on :tags
+
+	private
+
+	 def send_email_to_subscribers
+	  Subscriber.all.each do |subscriber|
+	   SubscriptionMailer.send_email(subscriber.email, self).deliver_now
+	  end
+	 end
 	
 end
