@@ -1,13 +1,13 @@
 <div class="row">
+	<%= render "layouts/subscriber" %>
 	<%= render 'friends' %>
-	<%= render 'layouts/subscriber' %>
 	<div class="col-md-6 col-md-offset-3">
 		<div id="user-profile">
 			<h1 id="posttitle"><%= @user.name %></h1>
 			<h5 id="about-user">"<%= @user.about %>"</h5>
 			<div class="profile-image">
 				<div class="round-image-profile">
-				  <%= image_tag(@user.avatar.url(:thumb)) %>
+					<%= image_tag(@user.avatar.url(:thumb)) %>
 				</div>
 			</div>
 			<p><%= link_to "Followers(#{@user.followers.count})", followers_user_path(@user) %> |

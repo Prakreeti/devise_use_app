@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     
   end
 
-  post 'users/find_friends', to: 'users#find_friends'
+  get 'users/find_friends', to: 'users#find_friends'
 
   get '/post/myblogs', to: 'posts#myblogs'
 

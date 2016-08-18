@@ -1,18 +1,17 @@
 <div class="friends">
-	<%= form_tag 'users/find_friends' do%>
-		<p>Enter current location to find friends nearby:</p>
-	  <p><%= text_field_tag 'current_location' %></p><%= params[:current_location]%>
+	<%= form_tag 'users/find_friends', :method => 'get' do%>
+		<p>Enter current city to find friends nearby:</p>
+	  <p><%= text_field_tag 'current_location' %></p>
 	  <p><%= submit_tag "Find", class: "btn-primary"%></p>
 	<% end %>
-</div>
 
-<% if @nearby_friends %>
-	<div class = "find-friends">
+<% if $nearby_friends %>
 	<span class="glyphicon glyphicon-user"></span>Friends Near You:
-		<% @nearby_friends.each do |friend| %>
-			<table class="table table-hover">
+		<% $nearby_friends.each do |friend| %>
+			<table>
 				<tbody>
 					<tr>
+					<div>
 						<td>
 							<div class="round-image-50">
 								<%= image_tag(friend.avatar.url(:thumb)) %>
@@ -21,10 +20,11 @@
 						<td>
 							<%= link_to "#{friend.name}", user_path(friend) %>
 						</td>
+					</div>
 					</tr>
 				</tbody>
 			</table>
 		<% end %>
-	</div>
+	<% $nearby_friends = nil %>
 <% end %>
-
+</div>

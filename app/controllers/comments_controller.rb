@@ -3,7 +3,8 @@ class CommentsController < ApplicationController
 
 	#creates the comment
 	def create
-		@comment = Comment.create(comment_params.merge({post_id: @post.id, user_id: current_user.id}))
+		@comment = Comment.create(comment_params.merge({post_id: @post.id,
+																		 user_id: current_user.id}))
 		if @comment.reply_to 
 			@c = Comment.find(@comment.reply_to)
 			@c.children_count += 1
@@ -14,9 +15,9 @@ class CommentsController < ApplicationController
 
 	#destroys the comment
 	def destroy
-	    @comment = @post.comments.find(params[:id])
-	    @comment.destroy
-	    redirect_to :back
+	  @comment = @post.comments.find(params[:id])
+	  @comment.destroy
+	  redirect_to :back
 	end
 	
 	#for displaying the comments of a post
@@ -32,9 +33,10 @@ class CommentsController < ApplicationController
 
 	private
 	def comment_params
-		params.require(:comment).permit(:content, :reply_to, :base_reply, :level)
+		params.require(:comment).permit(:content, :reply_to,
+																		 :base_reply, :level)
 	end
 	def setpost
-		@post = Post.find(params[:post_id])
+		@post = Post.includes(:comments).find(params[:post_id])
 	end
 end

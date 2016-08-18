@@ -4,10 +4,14 @@ class PostsController < ApplicationController
 
   #to display all posts with pagination
   def index
-    @posts = Post.paginate(page: params[:page])
+    if params[:search]
+      @posts = Post.search(params[:search]).paginate(page: params[:page]).order("created_at DESC")
+    else
+      @posts = Post.paginate(page: params[:page]).order("created_at DESC")
+    end
   end
 
-  #to show the content of each post
+  #to show the content of each post including its comments and ratings
   def show
   end
 
@@ -58,7 +62,11 @@ class PostsController < ApplicationController
 
   #to show all posts of current user
   def myblogs
-     @posts=current_user.posts
+    if params[:search]
+      @posts = current_user.posts.search(params[:search]).paginate(page: params[:page]).order("created_at DESC")
+    else
+      @posts = current_user.posts.paginate(page: params[:page]).order("created_at DESC")
+    end
   end
 
   #to show posts with a certain tag
@@ -77,7 +85,7 @@ class PostsController < ApplicationController
 
   private
     def set_post
-      @post = Post.find(params[:id])
+      @post = Post.includes(:comments).find(params[:id])
     end
 
     def post_params

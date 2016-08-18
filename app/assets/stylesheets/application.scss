@@ -252,27 +252,23 @@
     padding-top: 15px;
     background: white;
 }
-.find-friends{
-    border: solid grey 2px;
-    height: 300px;
-    right: 0px;
-    padding: 30px;
-    width: 300px;
-    position: fixed;
-}
 .friends{
-    position: fixed;
-    right: 0px;
-    border: solid grey 2px;
-    margin-top: 100px;
-    padding: 30px;
-    width: 281.11px;
-}
-.subscribers-div{
     float: right;
     border: solid grey 2px;
     padding: 30px;
     position: fixed;
     top: 300px;
     right: 0px;
+    width: 281.11px;
+    overflow: auto;
+    max-height: 300px;
+}
+.subscribers-div{
+    position: fixed;
+    right: 0px;
+    border: solid grey 2px;
+    margin-top: 100px;
+    padding: 30px;
+    width: 281.11px;
+
 }

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 	before_action :set_user, only: [:show, :follows, :followers]
+	$nearby_friends = nil
 
 	#to show all users using pagination
 	def index
@@ -47,7 +48,7 @@ class UsersController < ApplicationController
 
   #to find friends nearby based on current location of the user
   def find_friends
-	 	@nearby_friends = current_user.friends.near("cuttack", 50)
+	 	$nearby_friends = current_user.friends.near(params[:current_location], 50)
 	 	redirect_to :back
   end
   	
@@ -58,6 +59,6 @@ class UsersController < ApplicationController
      :password, :password_confirmation, :avatar, :latitude, :longitude)
   end
   def set_user
-  	@user = User.find(params[:id])
+  	@user = User.includes(:posts).find(params[:id])
   end
 end
