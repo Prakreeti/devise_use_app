@@ -38,7 +38,7 @@
 							<div><h3><%= link_to "#{post.title}", post_path(post) %></h3></div>
 							<div><%= post.content.html_safe %></div>
 							<% if post.image_file_name != nil %>
-								<div><%= image_tag(post.image.url(:med)) %></div>
+								<div><%= image_tag(post.image.url(:large)) %></div>
 							<% end %>
 							<div><%= link_to "#{post.posted_by}", user_path(post.user_id) %>
 							<%= post.created_at %></div>

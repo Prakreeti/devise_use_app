@@ -74,12 +74,17 @@ class User < ActiveRecord::Base
     Post.where("user_id IN (#{follow_ids})
                      OR user_id = :user_id", user_id: id)
   end
+
   def address
     "#{city}"
   end
 
+  def self.search(search) 
+    where("name LIKE ?  OR city LIKE ?", "%#{search}%", "%#{search}%")
+  end
+
   has_attached_file :avatar, :styles => { :medium => "300x300>",
                                           :thumb => "100x100#" },
-                                :default_url => "/images/:style/missing.png"
+                  :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 end

@@ -14,10 +14,12 @@
     <% end %>
   </tbody>
   <div>
-  <%= form_tag(post_myblogs_path, :method => "get", id: "search-form") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Search Posts" %>
-    <%= submit_tag "Search", class: "btn-primary" %>
-  <% end %>
+    <%= form_tag(post_myblogs_path, method: "get", id: "search-form") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search Posts" %>
+      <%= button_tag(type: 'submit') do %>
+        <span class="glyphicon glyphicon-search"></span> 
+      <% end %>
+    <% end %>
   </div>
 </table>
 <%= will_paginate %>

@@ -22,7 +22,14 @@ $(document).ready(function() {
   $('.comment-reply').on('click', function() {
     $("#replies_" + ($(this).attr('id').split("_"))[1]).toggle();
   });
+  
   $('.reply').on('click', function() {
     $("#reply_div" + ($(this).attr('id').split("_")[1])).toggle();
+  });
+
+  $("#search-user-form").keyup(function() {
+    $.get($("#search-user-form").attr("action"),
+    		 $("#search-user-form").serialize(), null, "script");
+    return false;
   });
 });

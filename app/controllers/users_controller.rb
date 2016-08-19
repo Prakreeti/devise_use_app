@@ -4,7 +4,11 @@ class UsersController < ApplicationController
 
 	#to show all users using pagination
 	def index
-		@users = User.paginate(page: params[:page])
+		if params[:search]
+      @users = User.search(params[:search]).paginate(page: params[:page]).order("created_at DESC")
+    else
+      @users = User.paginate(page: params[:page]).order("created_at DESC")
+    end
 	end
 
 	#to edit the datils of current user
