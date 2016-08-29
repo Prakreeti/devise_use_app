@@ -1,18 +1,26 @@
 class LikesController < ApplicationController
+	before_action :authenticate_user!
 
 	#to like a post
 	def create
-		post = Post.find(params[:post_id])
-		@like = current_user.likes.new(post: post)
+		@post = Post.find(params[:post_id])
+		@like = current_user.likes.new(post: @post)
 		if @like.save
-			redirect_to :back
+			respond_to do |format|
+				format.html {redirect_to :back}
+				format.js
+			end
 		end
 	end
 
 	#to unlike a post
 	def destroy
 		@like = Like.find(params[:id])
+		@post = Post.find(@like.post_id)
 		@like.destroy
-		redirect_to :back
+		respond_to do |format|
+				format.html {redirect_to :back}
+				format.js
+		end
 	end
 end

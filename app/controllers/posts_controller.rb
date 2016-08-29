@@ -1,13 +1,17 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :check_user, only: [:edit, :update]
 
   #to display all posts with pagination
   def index
     if params[:search]
-      @posts = Post.search(params[:search]).paginate(page: params[:page]).order("created_at DESC")
+      @posts = Post.search(params[:search])
+              .paginate(page: params[:page])
+              .includes(:user).order("updated_at DESC")
     else
-      @posts = Post.paginate(page: params[:page]).order("created_at DESC")
+      @posts = Post.paginate(page: params[:page])
+              .includes(:user).order("updated_at DESC")
     end
   end
 
@@ -63,9 +67,9 @@ class PostsController < ApplicationController
   #to show all posts of current user
   def myblogs
     if params[:search]
-      @posts = current_user.posts.search(params[:search]).paginate(page: params[:page]).order("created_at DESC")
+      @posts = current_user.posts.search(params[:search]).paginate(page: params[:page]).order("updated_at DESC")
     else
-      @posts = current_user.posts.paginate(page: params[:page]).order("created_at DESC")
+      @posts = current_user.posts.paginate(page: params[:page]).order("updated_at DESC")
     end
   end
 
@@ -85,10 +89,21 @@ class PostsController < ApplicationController
 
   private
     def set_post
-      @post = Post.includes(:comments).find(params[:id])
+      @post = Post.includes(:user, :tags).find_by(:id => params[:id])
+      if @post == nil
+        redirect_to :posts,
+         :flash => { :notice => "You tried to access a non-existing post." }
+      end
     end
 
     def post_params
       params.require(:post).permit(:title, :content, :image, :tag_list)
+    end
+
+    def check_user
+      if @post.user_id != current_user.id
+        redirect_to :posts,
+         :flash => { :notice => "You cannot change other's posts." }
+      end
     end
 end

@@ -1,12 +1,22 @@
 <div class="row">
-  <%= render "layouts/subscriber" %>
   <div class="col-md-6 col-md-offset-3">
-    <h1 id="posttitle">Listing Your Posts</h1>
-    <% if @posts.count == 0 %>
-      Create your first blog. It's easy!</br>
-    <% end %>
+    <div class="search-form">
+      <%= form_tag(post_myblogs_path, method: "get", id: "search-myblogs-form") do %>
+        <%= text_field_tag :search, params[:search], placeholder: "Search Posts" %>
+        <%= button_tag(type: 'submit') do %>
+          <span class="glyphicon glyphicon-search"></span> 
+        <% end %>
+      <% end %>
+    </div>
+    <h1 id="title">Listing Your Posts</h1>
     <%= link_to "Create a New Blog", new_post_path %>
-    <%= render "myposts" %>
+    <% if @posts.any? %>
+	  	<div id="myposts"> 
+	    	<%= render "my_posts" %>
+	    </div>
+	  <% else %>
+	  		<p>Create your first blog!</p>
+	  <% end %>
   </div>
 </div>
 

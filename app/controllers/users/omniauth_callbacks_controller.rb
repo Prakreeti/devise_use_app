@@ -3,7 +3,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.from_omniauth(request.env["omniauth.auth"])
     if @user.persisted?
       bypass_sign_in(@user)
-      redirect_to root_path
+      redirect_to home_path
       # sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
       #set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
     else

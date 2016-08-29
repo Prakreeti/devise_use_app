@@ -1,15 +1,21 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
-		<h1 id="posttitle">All Pending Friend Requests</h1>
-		<table class="table table-hover">
-			<% @incoming.each do |request| %>
-				<tr>
-					<td><%= User.find_by(:id => request.user_id).name %></td>
-					<td><%= link_to "Accept", friend_request_path(request), method: :put %></td>
-					<td><%= link_to "Reject", friend_request_path(request), method: :delete  %></td>
-				</tr>
-			<% end %>
-		</table>
+		<h1 id="title">Pending Requests</h1>
+		<% if @incoming.any? %>
+			<table class="table table-hover">
+				<% @incoming.each do |request| %>
+					<tr>
+						<td><% user = User.find_by(:id => request.user_id) %>
+							<%= link_to "#{user.name}", user_path(user) %>
+						</td>
+						<td><%= link_to "Accept", friend_request_path(request), method: :put %></td>
+						<td><%= link_to "Reject", friend_request_path(request), method: :delete  %></td>
+					</tr>
+				<% end %>
+			</table>
+		<% else %>
+			<p>There are no pending friend requests.</p>
+		<% end %>
 	</div>
 </div>
 

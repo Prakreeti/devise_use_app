@@ -16,10 +16,6 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
 
- body {
-
-    background: transparent;
- }
 
  #logo {
   float: left;
@@ -135,40 +131,38 @@
         margin-right: 0;
     }
 }
-#tell-a-friend{
-    border-top: dashed 2px grey;
-    padding-top: 20px;
+
+#commenter{
+   font-size: small;
 }
-.eachcomment{
-    border: 2px solid grey;
-    border-radius: 15px 50px 30px 5px;
-    padding-left: 20px;
- }
- #commenter{
-    font-size: small;
- }
  .commentcontent{
     font-style: italic;
  }
 #username{
     color: black;
 }
-#postcontent{
+#post-content{
     border: solid 0.5px #B2D9E9;
     border-radius: 10px;
-    padding: 5px;
+    padding: 10px;
+    word-wrap: break-word;
 }
-#posttitle{
+#post-title{
     margin-top: 80px;
+    word-wrap: break-word;
 }
-#conveylogo{
+#title{
+    margin-top: 80px;
+    width: 400px;
+}
+#convey-logo{
     float: left;
     margin: 0; 
 }
 .navbar-right{
     background-color: transparent;
 }
-.replycontent{
+.reply-content{
     margin-top: 5px;
     margin-bottom: 5px;
     padding-left: 10px;
@@ -176,10 +170,7 @@
     border: 1px #929698 dashed;
     border-radius: 5px;   
 }
-#replydelete{
-    font-size: small;
-}
-#timeago{
+#time-ago{
     color: #AFB4B7;
 }
 .replies{
@@ -213,10 +204,15 @@
     float: right;
 }
 #user-profile{
-    background-color: #DACEA4;
+    background-color: #1ABC9C;  
     padding-left: 10px; 
     padding-bottom: 10px;
     border-radius: 5px;
+    word-wrap: break-word;
+    a{
+     color: white;
+    }
+
 }
 #about-user{
     color: white
@@ -238,11 +234,10 @@
     box-shadow: 10px 10px 5px #888888;
     border: #E2E2E2 1px solid;
     border-radius: 10px;
-    padding: 5px;
+    padding: 10px;
     background-color: white;
 }
-#postimage{
-
+#post-image{
     margin-top: 10px;
 }
 #marquee-div{
@@ -257,7 +252,7 @@
     border: solid grey 2px;
     padding: 30px;
     position: fixed;
-    top: 300px;
+    top: 120px;
     right: 0px;
     width: 281.11px;
     overflow: auto;
@@ -267,8 +262,39 @@
     position: fixed;
     right: 0px;
     border: solid grey 2px;
-    margin-top: 100px;
+    top: 120px;
     padding: 30px;
     width: 281.11px;
-
+}
+.search-form{
+    float: right;
+    margin-top: 84px;
+}
+.comment-hide {
+    display: none;
+}
+.field{
+    margin-top: 8px;
+}
+table {
+    table-layout:fixed;
+    td{
+        word-wrap:break-word;
+    } 
+}    
+.box {
+  max-height: 152px;
+  position: relative;
+  overflow: hidden;
+}
+.read-more { 
+  position: absolute; 
+  bottom: 0; 
+  left: 0;
+  width: 100%;
+  text-align: right; 
+  margin: 0;
+}
+#post-heading{
+    margin-top: 0px;
 }

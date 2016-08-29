@@ -52,5 +52,12 @@ Rails.application.configure do
   enable_starttls_auto: true  }
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.delivery_method = :smtp
+
+  config.after_initialize do
+  #Enable bullet in your application
+  Bullet.enable = true
+  Bullet.alert = true
+  Bullet.console = true
+end
 end
     

@@ -1,16 +1,16 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
-		<h2 id="posttitle">Resend confirmation instructions</h2>
+		<h2 id="title">Resend confirmation instructions</h2>
 		<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
 		  	<%= devise_error_messages! %>
 
 		  <div class="field">
-		    <%= f.label :email %><br />
-		   	<%= f.email_field :email, class: 'form-control', autofocus: true, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %><br>
+		    <%= f.label :email %>
+		   	<%= f.email_field :email, class: 'form-control', autofocus: true, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
 		  </div>
 
-		  <div class="actions">
-		    <%= f.submit "Resend confirmation instructions", class: "btn btn-primary" %><br>
+		  <div class="field">
+		    <%= f.submit "Resend confirmation instructions", class: "btn btn-primary" %>
 		  </div>
 		<% end %>
 		<%= render "devise/shared/links" %>

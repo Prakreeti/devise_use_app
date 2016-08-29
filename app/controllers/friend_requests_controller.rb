@@ -1,4 +1,5 @@
 class FriendRequestsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_friend_request, except: [:index, :create]
 
   #create a new friend request

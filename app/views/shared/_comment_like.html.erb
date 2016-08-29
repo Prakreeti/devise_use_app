@@ -1,0 +1,5 @@
+<span id="comment-like<%=@comment.id%>">
+  <span class="glyphicon glyphicon-thumbs-up">
+    <%= link_to "Like", comment_likes_path(:comment_id => @comment), method: :post, remote: true %>
+  </span>
+</span> 

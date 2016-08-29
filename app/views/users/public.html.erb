@@ -1,0 +1,34 @@
+<div class="public-background">
+<div class="row">
+	<%= render "layouts/subscriber" %>
+	<div class="col-md-8 col-md-offset-1">
+		<% if @posts.any? %>
+			<table class="table">
+				<thead>
+					<th>Post</th>
+				</thead>
+				<tbody>
+					<% @posts.includes(:user).order("updated_at DESC").each do |post| %>
+						<tr>
+							<td>
+							<div class="box">
+								<div><h2 id="post-heading"><%= link_to "#{post.title}", post_path(post) %></h2></div>
+								<div><%= link_to "#{post.user.name}", user_path(post.user_id) %>
+								<%= post.created_at.strftime("%I:%M%p") %></div>
+								<div><%= post.content.html_safe %></div>
+								<% if post.image_file_name != nil %>
+									<div><%= image_tag(post.image.url(:large)) %></div>
+								<% end %>
+								<p class="read-more"><%= link_to "Read More", post_path(post), class: "button" %></p>
+							</div>	
+							</td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		<% else %>
+			<p>There are no posts to show.</p>
+		<% end %>
+	</div>
+</div>
+</div>

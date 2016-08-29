@@ -24,6 +24,10 @@ class Post < ActiveRecord::Base
   	where("title LIKE ? OR content LIKE ?", "%#{search}%", "%#{search}%") 
 	end
 
+	def to_param
+    [id, title.parameterize].join("-")
+  end
+
 	private
 
 	 def send_email_to_subscribers

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811115831) do
+ActiveRecord::Schema.define(version: 20160826063046) do
 
   create_table "average_caches", force: :cascade do |t|
     t.integer  "rater_id",      limit: 4
@@ -82,10 +82,10 @@ ActiveRecord::Schema.define(version: 20160811115831) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.string   "title",              limit: 255
-    t.text     "content",            limit: 65535
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.text     "title",              limit: 4294967295
+    t.text     "content",            limit: 4294967295
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.integer  "user_id",            limit: 4
     t.string   "posted_by",          limit: 255
     t.string   "image_file_name",    limit: 255
@@ -204,7 +204,6 @@ ActiveRecord::Schema.define(version: 20160811115831) do
     t.string   "about",                  limit: 255
     t.float    "latitude",               limit: 24
     t.float    "longitude",              limit: 24
-    t.string   "current_location",       limit: 255
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

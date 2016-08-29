@@ -1,0 +1,3 @@
+<% if comment.comment_likes.count != 0 %>
+  <%= link_to "#{comment.comment_likes.count} Likes",liked_by_comment_path(comment) %> |
+<% end %>

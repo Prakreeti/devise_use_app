@@ -30,7 +30,8 @@ class User < ActiveRecord::Base
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable,
-         :omniauthable, :omniauth_providers => [:facebook]
+         :omniauthable, :omniauth_providers => [:facebook],
+         :authentication_keys => [:login]
 
   VALID_FB_REGEX = /(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/
   VALID_STRING_REGEX = /([\w\-\'])([\s]+)?([\w\-\'])/
@@ -38,7 +39,8 @@ class User < ActiveRecord::Base
   validates :name,  presence: true, 
     length: { maximum: 50 }, 
     format: { with: VALID_STRING_REGEX }, unless: :uid
-  validates :city,  presence: true, format: { with: VALID_STRING_REGEX },  unless: :uid
+  validates :city,  presence: true, format: { with: VALID_STRING_REGEX }, 
+                    unless: :uid
   validates :username,  presence: true, uniqueness: true, unless: :uid
   validates :fb_profile, presence: true,
                     format: { with: VALID_FB_REGEX }, unless: :uid
@@ -79,6 +81,27 @@ class User < ActiveRecord::Base
     "#{city}"
   end
 
+  def login=(login)
+    @login = login
+  end
+
+  def login
+    @login || self.username || self.email
+  end
+
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+    elsif conditions.has_key?(:username) || conditions.has_key?(:email)
+      where(conditions.to_h).first
+    end
+  end
+
+  def to_param
+    [id, name.parameterize].join("-")
+  end
+  
   def self.search(search) 
     where("name LIKE ?  OR city LIKE ?", "%#{search}%", "%#{search}%")
   end

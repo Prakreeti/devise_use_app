@@ -1,4 +1,5 @@
 class FriendsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_friend, only: :destroy
 
   #to create friends on acceptance of friend request

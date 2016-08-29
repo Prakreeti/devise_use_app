@@ -1,14 +1,13 @@
 <%= tinymce_assets %>
 <div class="row">
-<%= render "layouts/subscriber" %>
   <div class="col-md-6 col-md-offset-3">
-    <h1 id="posttitle"><%= @post.title %></h1>
+    <h1 id="post-title"><%= @post.title %></h1>
     <p>
-      <div id="postcontent">
+      <div id="post-content">
         <%= @post.content.html_safe %>
       </div>
       <% if @post.image_file_name != nil %>
-        <div id="postimage">
+        <div id="post-image">
           <%= link_to image_tag(@post.image.url(:large)), @post.image.url %>
         </div>
       <% end %>
@@ -21,37 +20,39 @@
       <% end %>
     </p>
     <div id="rating">
-      <%= link_to @post.posted_by, '#' %>
-      <%= rating_for @post, 'content', enable_half: true, half_show: true,cancel: true %>
-    </div>  
-    <% if @post.likes.count != 0 %>
-      <%= link_to "#{@post.likes.count} Likes", liked_by_post_path %> |
-    <% end %>
+      <%= link_to @post.user.name, '#' %>
+      <%= rating_for @post, 'content', enable_half: true, half_show: true, cancel: true%>
+    </div>
+    <span id="post_likes_count"> 
+      <%= render "post_likes_count" %>
+    </span> 
     <% if !@post.liked_by.include?(current_user) %>
-      <span class="glyphicon glyphicon-thumbs-up"></span>
-      <%= link_to "Like", likes_path(:post_id => @post),method: :post %>   
+      <span id="like-span">
+        <span class="glyphicon glyphicon-thumbs-up">
+          <%= link_to "Like", likes_path(:post_id => @post),method: :post, remote: true %>
+        </span>
+      </span>   
     <% else %>
-      <% like = current_user.likes.find_by(:post_id => @post) %>
-      <span class="glyphicon glyphicon-thumbs-down"></span>
-      <%= link_to "Unlike", like_path(like),method: :delete %>
+      <% like = current_user.likes.find_by(:post_id => @post)  %>
+      <span id="unlike-span">
+        <span class="glyphicon glyphicon-thumbs-down">
+          <%= link_to "Unlike", like_path(like),method: :delete, remote: true %>
+        </span>
+      </span>
     <% end %>
-    <% if @post.user_id == current_user %>
+    <% if @post.user_id == current_user.id %>
       <div>
         <%= link_to 'Edit', edit_post_path(@post) %> |
         <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' } %>
       </div>
     <% end %>
 
-    <p>Share:</p>
-    <%= social_share_button_tag(@post.title) %>
-
-    <p>Comments:</p>
-    <% comments =  @post.comments.where("reply_to" => nil) %>
-    <%= render partial: "shared/comment", locals: {comments: comments, l: 0, post: @post} %>
-
-
     <h5>Add a comment:</h5>
     <%= render "new_comment_form" %>
+
+    <p>Comments:</p>
+    <% comments =  @post.comments.includes(:user, :liked_by, :children).where("reply_to" => nil) %>
+    <%= render partial: "shared/comment", locals: {comments: comments, l: 0, post: @post} %>
   </div>
 </div>
       

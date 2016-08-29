@@ -5,13 +5,12 @@
 	  <p><%= submit_tag "Find", class: "btn-primary"%></p>
 	<% end %>
 
-<% if $nearby_friends %>
-	<span class="glyphicon glyphicon-user"></span>Friends Near You:
+	<% if $nearby_friends %>
+		<span class="glyphicon glyphicon-user"></span>Friends Near You:
 		<% $nearby_friends.each do |friend| %>
 			<table>
 				<tbody>
 					<tr>
-					<div>
 						<td>
 							<div class="round-image-50">
 								<%= image_tag(friend.avatar.url(:thumb)) %>
@@ -20,11 +19,10 @@
 						<td>
 							<%= link_to "#{friend.name}", user_path(friend) %>
 						</td>
-					</div>
 					</tr>
 				</tbody>
 			</table>
 		<% end %>
-	<% $nearby_friends = nil %>
-<% end %>
+		<% $nearby_friends = nil %>
+	<% end %>
 </div>

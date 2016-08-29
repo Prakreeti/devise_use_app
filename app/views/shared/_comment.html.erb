@@ -3,43 +3,51 @@
     <% l = 50 %>
   <% end %>
   <% comments.each do |comment| %>
-    <div class="replycontent">    
+    <div class="reply-content">    
       <strong><%= comment.user.name %></strong> -- "<%= comment.content %>"
+      <div>
         <div>
-          <div>
-            <% if comment.comment_likes.count != 0 %>
-              <%= link_to "#{comment.comment_likes.count} Likes",liked_by_comment_path(comment) %> |
-            <% end %>
-            <% if !comment.liked_by.include?(current_user) %>
+          <span id="comment-likes-count<%= comment.id%>">
+            <%= render partial: "shared/comment_likes_count", locals: {comment: comment} %>
+          </span>
+           
+          <% if !comment.liked_by.include?(current_user) %>
+            <span id="comment-like<%=comment.id%>">
               <span class="glyphicon glyphicon-thumbs-up">
-              <%= link_to "Like", comment_likes_path(:comment_id => comment),method: :post %>
-              </span> 
-            <% else %>
-              <% like = current_user.comment_likes.find_by(:comment_id =>comment) %>
-              <span class="glyphicon glyphicon-thumbs-down">
-                <%= link_to "Unlike", comment_like_path(like),method: :delete %>
+                <%= link_to "Like", comment_likes_path(:comment_id => comment), method: :post, remote: true %>
               </span>
-            <% end %>
-          </div>
-          <%= link_to "Reply", "javascript:void(0);", 
-                  id: "addcomment_#{comment.id}", class: "reply"%>
-          <% if comment.user_id == current_user.id %>
-            <span> | <%= link_to 'Destroy', [comment.post, comment],
-                method: :delete,
-                data: { confirm: 'Are you sure?' } %>    
+            </span> 
+          <% else %>
+            <% like = current_user.comment_likes.find_by(:comment_id =>comment) %>
+            <span id="comment-unlike<%=comment.id%>">
+              <span class="glyphicon glyphicon-thumbs-down">
+                <%= link_to "Unlike", comment_like_path(like), method: :delete, remote: true %>
+              </span>
             </span>
           <% end %>
-          <span id="timeago"><%= time_ago_in_words(comment.created_at) %> ago
-            <% if (comment.children_count > 0) %>
-              <%= link_to "All Replies", "javascript:void(0);", id: "comment_#{comment.id}", class: "comment-reply"%>
-            <% end %>
-          </span>
         </div>
+        <%= link_to "Reply", "javascript:void(0);", 
+                  id: "addcomment_#{comment.id}", class: "reply"%>
+        <% if comment.user_id == current_user.id %>
+          <span> | <%= link_to 'Destroy', [comment.post, comment],
+                method: :delete,
+                data: { confirm: 'Are you sure?' } %>    
+          </span>
+        <% end %>
+        <span id="time-ago"><%= time_ago_in_words(comment.created_at) %> ago
+          <% if (comment.children.length > 0) %>
+            <%= link_to "All Replies", "javascript:void(0);", class: "comment-reply", id: "comment_show_#{comment.id}" %>
+            <%= link_to "Hide Replies", "javascript:void(0);",  class: "comment-hide", id: "comment_hide_#{comment.id}" %>
+          <% end %>
+        </span>
+      </div>
     </div>
- 
-    <div class="replies" id="<%= "replies_#{comment.id}"%>" >
-      <%= render partial: "shared/comment", locals: {comments: comment.children, l: l * 0.9, post: post} %>
+    
+    <div class="replies" id="<%= "replies_all_#{comment.id}" %>">
+      <% comments = comment.children.includes(:post, :liked_by, :user) %>
+      <%= render partial: "shared/comment", locals: {comments: comments, l: l * 0.9, post: post} %>
     </div>
+    
     <div  id="reply_div<%= "#{comment.id}" %>", class="add-reply">
       <%= form_for([post, post.comments.build]) do |f| %>
         <%= f.hidden_field :reply_to, :value => comment.id %>

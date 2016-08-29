@@ -1,14 +1,13 @@
 Rails.application.routes.draw do
   
-  # for the home page
-  root 'users#dashboard'
+  
 
-  resources :subscribers
+  resources :subscribers, only: :create
   
   post '/rate' => 'rater#create', :as => 'rate'
 
-  resources :friend_requests
-  resources :friends
+  resources :friend_requests, only: [:create, :index, :destroy, :update]
+  resources :friends, only: [:index, :destroy]
 
   resources :posts do
     member do
@@ -31,7 +30,13 @@ Rails.application.routes.draw do
   
   devise_for :users, controllers: { registrations: 'registrations',
                      omniauth_callbacks: "users/omniauth_callbacks" }
-  
+  authenticated :user do
+    root 'users#dashboard', as: :authenticated_root
+  end
+
+  # for the home page
+  root 'users#public'
+
   resources :users do
     member do
       get :follows, :followers
@@ -40,11 +45,15 @@ Rails.application.routes.draw do
 
   resources :relationships, only: [:create, :destroy]
 
-  resources :likes
-  resources :comment_likes
+  resources :likes, only: [:create, :destroy]
+  resources :comment_likes, only: [:create, :destroy]
 
   resources :tags, only: [:index, :show]
   get 'tagged', to: 'posts#tagged'
+
+  get 'home', to: 'users#dashboard'
+
+  get '*a', :to => 'errors#routing'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -19,8 +19,17 @@
 //= require social-share-button
 //= require_tree .
 $(document).ready(function() {
+
   $('.comment-reply').on('click', function() {
-    $("#replies_" + ($(this).attr('id').split("_"))[1]).toggle();
+    $("#replies_all_" + ($(this).attr('id').split("_"))[2]).toggle();
+    $(this).hide();
+    $("#comment_hide_" + ($(this).attr('id').split("_"))[2]).show();
+  });
+
+  $('.comment-hide').on('click', function() {
+    $("#replies_all_" + ($(this).attr('id').split("_"))[2]).toggle();
+    $(this).hide();
+    $("#comment_show_" + ($(this).attr('id').split("_"))[2]).show();
   });
   
   $('.reply').on('click', function() {
@@ -30,6 +39,16 @@ $(document).ready(function() {
   $("#search-user-form").keyup(function() {
     $.get($("#search-user-form").attr("action"),
     		 $("#search-user-form").serialize(), null, "script");
+    return false;
+  });
+  $("#search-post-form").keyup(function() {
+    $.get($("#search-post-form").attr("action"),
+         $("#search-post-form").serialize(), null, "script");
+    return false;
+  });
+  $("#search-myblogs-form").keyup(function() {
+    $.get($("#search-myblogs-form").attr("action"),
+         $("#search-myblogs-form").serialize(), null, "script");
     return false;
   });
 });

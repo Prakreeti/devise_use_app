@@ -5,18 +5,21 @@ class UsersController < ApplicationController
 	#to show all users using pagination
 	def index
 		if params[:search]
-      @users = User.search(params[:search]).paginate(page: params[:page]).order("created_at DESC")
+      @users = User.search(params[:search])
+      				.paginate(page: params[:page])
+      				.order("created_at DESC")
     else
-      @users = User.paginate(page: params[:page]).order("created_at DESC")
+      @users = User.paginate(page: params[:page])
+      				.order("created_at DESC")
     end
 	end
 
-	#to edit the datils of current user
+	#to edit the password of current user
 	def edit
 		@user = User.find(current_user)
 	end
 
-	#to update the details of current user
+	#to update the password of current user
 	def update
 		@user = User.find(current_user)
 		if @user.update_with_password(user_params)
@@ -45,9 +48,13 @@ class UsersController < ApplicationController
   	if !user_signed_in?
   		redirect_to new_user_session_path
   	else
-  		@user = User.find(current_user)
+  		@user = current_user
   		@posts = @user.feed
   	end
+  end
+
+  def public
+    @posts = Post.all
   end
 
   #to find friends nearby based on current location of the user
@@ -55,6 +62,7 @@ class UsersController < ApplicationController
 	 	$nearby_friends = current_user.friends.near(params[:current_location], 50)
 	 	redirect_to :back
   end
+
   	
 	private
 
@@ -63,6 +71,10 @@ class UsersController < ApplicationController
      :password, :password_confirmation, :avatar, :latitude, :longitude)
   end
   def set_user
-  	@user = User.includes(:posts).find(params[:id])
+  	@user = User.includes(:posts).find_by(:id => params[:id])
+    if @user == nil
+       redirect_to :users,
+         :flash => { :notice => "You tried to access a non-existing user." }
+    end
   end
 end
