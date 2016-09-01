@@ -2,8 +2,8 @@
   <% if l == 0 %>
     <% l = 50 %>
   <% end %>
-  <% comments.each do |comment| %>
-    <div class="reply-content">    
+  <% comments.order("created_at DESC").each do |comment| %>
+    <div id="reply-content">    
       <strong><%= comment.user.name %></strong> -- "<%= comment.content %>"
       <div>
         <div>

@@ -16,10 +16,10 @@
 //= require jquery.raty
 //= require ratyrate
 //= require tinymce-jquery
-//= require social-share-button
 //= require_tree .
-$(document).ready(function() {
 
+$(document).ready(function() {
+  // to implement showing and hiding of replies
   $('.comment-reply').on('click', function() {
     $("#replies_all_" + ($(this).attr('id').split("_"))[2]).toggle();
     $(this).hide();
@@ -36,16 +36,19 @@ $(document).ready(function() {
     $("#reply_div" + ($(this).attr('id').split("_")[1])).toggle();
   });
 
+  // to implement live search in users and posts
   $("#search-user-form").keyup(function() {
     $.get($("#search-user-form").attr("action"),
     		 $("#search-user-form").serialize(), null, "script");
     return false;
   });
+
   $("#search-post-form").keyup(function() {
     $.get($("#search-post-form").attr("action"),
          $("#search-post-form").serialize(), null, "script");
     return false;
   });
+
   $("#search-myblogs-form").keyup(function() {
     $.get($("#search-myblogs-form").attr("action"),
          $("#search-myblogs-form").serialize(), null, "script");

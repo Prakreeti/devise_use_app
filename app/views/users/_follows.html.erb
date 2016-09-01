@@ -1,0 +1,16 @@
+<table class="table table-hover">
+	<tbody>
+		<% @users.each do |user| %>
+			<tr>
+				<td>
+					<div class="round-image-50">
+		      	<%= image_tag(user.avatar.url(:thumb)) %>
+		      </div>
+	      </td>
+				<td>
+			    <%= link_to "#{user.name}", user_path(user) %>
+			  </td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

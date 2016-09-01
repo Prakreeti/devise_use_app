@@ -4,9 +4,13 @@ class FriendRequestsController < ApplicationController
 
   #create a new friend request
   def create
-    friend = User.find(params[:friend_id])
+    friend = User.find_by(:id => params[:friend_id])
     @friend_request = current_user.friend_requests.new(friend: friend)
-    @friend_request.save
+    if @friend_request.save
+      flash[:notice] = "Friend Request Sent"
+    else
+      flash[:notice] = "Friend Request not sent"
+    end
     redirect_to :back
  	end
 
@@ -18,7 +22,11 @@ class FriendRequestsController < ApplicationController
 
   #to destroy friend request
 	def destroy
-  	@friend_request.destroy
+    if @friend_request.destroy
+      flash[:notice] = "Friend Request Deleted"
+    else
+      flash[:notice] = "Friend Request not Deleted"
+    end
     redirect_to :back
   end
 
@@ -28,13 +36,9 @@ class FriendRequestsController < ApplicationController
     redirect_to :back
 	end
 
-	#def not_self
-  #	errors.add(:friend, "can't be equal to user") if user == friend
-	#end
-
  	private
 
   def set_friend_request
-    @friend_request = FriendRequest.find(params[:id])
+    @friend_request = FriendRequest.find_by(:id => params[:id])
   end
 end

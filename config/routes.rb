@@ -1,41 +1,15 @@
 Rails.application.routes.draw do
-  
-  
 
-  resources :subscribers, only: :create
-  
-  post '/rate' => 'rater#create', :as => 'rate'
-
-  resources :friend_requests, only: [:create, :index, :destroy, :update]
-  resources :friends, only: [:index, :destroy]
-
-  resources :posts do
-    member do
-      get :liked_by
-    end
-    resources :comments 
-    
-  end
-
-  get 'users/find_friends', to: 'users#find_friends'
-
-  get '/post/myblogs', to: 'posts#myblogs'
-
-  resources :comments, only: :show do
-    member do
-      get :liked_by
-    end
-  end
-
-  
   devise_for :users, controllers: { registrations: 'registrations',
                      omniauth_callbacks: "users/omniauth_callbacks" }
+                     
+  # to set the root for logged in users
   authenticated :user do
     root 'users#dashboard', as: :authenticated_root
   end
 
   # for the home page
-  root 'users#public'
+  root 'public#public'
 
   resources :users do
     member do
@@ -43,13 +17,41 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :posts do
+    member do
+      get :liked_by
+    end
+    resources :comments  
+  end
+
+  get '/post/myblogs', to: 'posts#myblogs'
+
+  resources :friend_requests, only: [:create, :index, :destroy, :update]
+  resources :friends, only: [:index, :destroy]  
+
+  get 'users/find_friends', to: 'users#find_friends'
+
   resources :relationships, only: [:create, :destroy]
+
+  resources :comments, only: :show do
+    member do
+      get :liked_by
+    end
+  end
 
   resources :likes, only: [:create, :destroy]
   resources :comment_likes, only: [:create, :destroy]
 
   resources :tags, only: [:index, :show]
   get 'tagged', to: 'posts#tagged'
+
+  resources :subscribers, only: [:create, :destroy] do
+    collection do
+      get 'unsubscribe'
+    end
+  end
+  
+  post '/rate' => 'rater#create', :as => 'rate'
 
   get 'home', to: 'users#dashboard'
 

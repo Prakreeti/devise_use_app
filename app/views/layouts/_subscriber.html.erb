@@ -1,6 +1,6 @@
-<div class="subscribers-div">
+<div id="subscribers-div">
 	<%= form_tag(controller: "subscribers", action: "create", method: "post") do %>
-		<p>Enter your email here to subscribe:</p>
+		<p>Email-id</p>
 		<p><%= text_field(:subscriber, :email) %></p>
 		<p><%= submit_tag "subscribe", class: "btn-primary" %></p>
 	<% end %>

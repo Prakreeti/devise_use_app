@@ -28,13 +28,13 @@
         <%= link_to "Pending Requests(#{FriendRequest.where("friend" => current_user).count})", friend_requests_path %> 
       </li>
       <li>
-        <a href="#">About</a>
+        <a href="#" data-toggle="modal" data-target="#myModal">About</a>
       </li>
       <li>
-        <a href="#">Services</a>
+        <a href="#" data-toggle="modal" data-target="#myModal">Services</a>
       </li>
       <li>
-        <a href="#">Contact</a>
+        <a href="#" data-toggle="modal" data-target="#myModal">Contact</a>
       </li>
     </ul>
   </div>

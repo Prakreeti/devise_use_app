@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-   <% if flash[:notice] %>
-      <div class="notice alert-danger"><%= flash[:notice] %></div>
+    <% if flash[:notice] %>
+      <div class="notice"><%= flash[:notice] %></div>
     <% end %>
     <div class="search-form">
       <%= form_tag(users_path, method: "get", id: "search-user-form") do %>

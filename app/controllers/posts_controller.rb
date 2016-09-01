@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :check_user, only: [:edit, :update]
 
   #to display all posts with pagination
@@ -31,14 +31,12 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.new(post_params)
     @post.posted_by = current_user.name
-    respond_to do |format|
-      if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
-        format.json { render :show, status: :created, location: @post }
-      else
-        format.html { render :new }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
+    if @post.save
+      flash[:notice] = 'Post was successfully created.'
+      redirect_to @post 
+    else
+      flash[:notice] = 'Post could not be created. Try again.'
+      render :new
     end
   end
 
@@ -67,9 +65,11 @@ class PostsController < ApplicationController
   #to show all posts of current user
   def myblogs
     if params[:search]
-      @posts = current_user.posts.search(params[:search]).paginate(page: params[:page]).order("updated_at DESC")
+      @posts = current_user.posts.search(params[:search]).
+               paginate(page: params[:page]).order("updated_at DESC")
     else
-      @posts = current_user.posts.paginate(page: params[:page]).order("updated_at DESC")
+      @posts = current_user.posts.paginate(page: params[:page]).
+               order("updated_at DESC")
     end
   end
 
@@ -82,12 +82,14 @@ class PostsController < ApplicationController
     end  
   end
 
+  #to find the users who have liked the post
   def liked_by
-    post = Post.find(params[:id])
+    post = Post.find_by(:id => params[:id])
     @users = post.liked_by
   end
 
   private
+  
     def set_post
       @post = Post.includes(:user, :tags).find_by(:id => params[:id])
       if @post == nil

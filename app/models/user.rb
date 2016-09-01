@@ -1,15 +1,17 @@
 class User < ActiveRecord::Base
-
   has_many :posts, dependent: :destroy
+
   has_many :comments, dependent: :destroy
+
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
   has_many :friend_requests, dependent: :destroy
   has_many :pending_requests, through: :friend_requests, source: :friend
+
   has_many :follow_relationships, class_name: "Relationship",
-                               foreign_key: "follower_id", dependent: :destroy
+                              foreign_key: "follower_id", dependent: :destroy
   has_many :followed_relationships,  class_name: "Relationship",
-                               foreign_key: "followed_id", dependent: :destroy
+                              foreign_key: "followed_id", dependent: :destroy
   has_many :follows, through: :follow_relationships, source: :followed
   has_many :followers,through: :followed_relationships, source: :follower
 
@@ -45,6 +47,12 @@ class User < ActiveRecord::Base
   validates :fb_profile, presence: true,
                     format: { with: VALID_FB_REGEX }, unless: :uid
 
+  has_attached_file :avatar, :styles => { :medium => "300x300>",
+                                          :thumb => "100x100#" },
+                  :default_url => "/images/:style/missing.png"
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
+  # for facebook login
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
@@ -62,14 +70,17 @@ class User < ActiveRecord::Base
     end
   end
 
+  #to make a user follow another user
   def follow(other_user)
     follow_relationships.create(followed_id: other_user.id)
   end
 
+  #to stop user from following other user
   def unfollow(other_user)
     follow_relationships.find_by(followed_id: other_user.id).destroy
   end
 
+  #for the feed to be shown in the dashboard
   def feed
     follow_ids = "SELECT followed_id FROM relationships
                      WHERE  follower_id = :user_id"
@@ -77,10 +88,12 @@ class User < ActiveRecord::Base
                      OR user_id = :user_id", user_id: id)
   end
 
+  #Storing city as the address to be used by geocoder 
   def address
     "#{city}"
   end
 
+  #to login using email or username
   def login=(login)
     @login = login
   end
@@ -98,16 +111,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  #to use friendly urls
   def to_param
     [id, name.parameterize].join("-")
   end
   
+  #implements searching users 
   def self.search(search) 
     where("name LIKE ?  OR city LIKE ?", "%#{search}%", "%#{search}%")
   end
-
-  has_attached_file :avatar, :styles => { :medium => "300x300>",
-                                          :thumb => "100x100#" },
-                  :default_url => "/images/:style/missing.png"
-  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 end

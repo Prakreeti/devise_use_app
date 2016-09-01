@@ -1,13 +1,26 @@
 class SubscribersController < ApplicationController
-	
 	#to add a new email which subscribes to the website
 	def create
     @subscriber = Subscriber.new(subscriber_params)
-    @subscriber.save
-    redirect_to :back
+    if @subscriber.save
+      flash[:notice] = "You have been subscribed"
+      redirect_to :back
+    end
   end
 
+  def unsubscribe
+  end
+
+  def destroy
+    @subscriber = Subscriber.find_by(:email => params[:subscriber][:email])
+    @subscriber.destroy
+    flash[:notice] = "You have been unsubscribed"
+    redirect_to root_path
+  end
+
+
   private
+
   def subscriber_params
   	params.require(:subscriber).permit(:email)
   end

@@ -50,9 +50,6 @@ GEM
     bootstrap-will_paginate (0.0.10)
       will_paginate
     builder (3.2.2)
-    bullet (5.3.0)
-      activesupport (>= 3.0.0)
-      uniform_notifier (~> 1.10.0)
     byebug (9.0.5)
     climate_control (0.0.3)
       activesupport (>= 3.0)
@@ -205,7 +202,6 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
-    uniform_notifier (1.10.0)
     warden (1.2.6)
       rack (>= 1.0)
     web-console (2.3.0)
@@ -222,7 +218,6 @@ DEPENDENCIES
   acts-as-taggable-on
   bootstrap-sass (~> 3.3.6)
   bootstrap-will_paginate (= 0.0.10)
-  bullet
   byebug
   coffee-rails (~> 4.1.0)
   devise

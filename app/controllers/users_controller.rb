@@ -7,25 +7,26 @@ class UsersController < ApplicationController
 		if params[:search]
       @users = User.search(params[:search])
       				.paginate(page: params[:page])
-      				.order("created_at DESC")
+      				.order("updated_at DESC")
     else
       @users = User.paginate(page: params[:page])
-      				.order("created_at DESC")
+      				.order("updated_at DESC")
     end
 	end
 
 	#to edit the password of current user
 	def edit
-		@user = User.find(current_user)
+		@user = User.find_by(:id => current_user)
 	end
 
 	#to update the password of current user
 	def update
-		@user = User.find(current_user)
+		@user = User.find_by(:id => current_user)
 		if @user.update_with_password(user_params)
+      flash[:notice] = "Password successfully updated."
 			redirect_to new_user_session_path
 		else
-			render "edit"
+			render 'edit'
 		end	
 	end
 
@@ -53,27 +54,23 @@ class UsersController < ApplicationController
   	end
   end
 
-  def public
-    @posts = Post.all
-  end
-
   #to find friends nearby based on current location of the user
   def find_friends
 	 	$nearby_friends = current_user.friends.near(params[:current_location], 50)
 	 	redirect_to :back
   end
 
-  	
 	private
 
 	def user_params
     params.require(:user).permit(:current_password,
      :password, :password_confirmation, :avatar, :latitude, :longitude)
   end
+
   def set_user
   	@user = User.includes(:posts).find_by(:id => params[:id])
     if @user == nil
-       redirect_to :users,
+      redirect_to :users,
          :flash => { :notice => "You tried to access a non-existing user." }
     end
   end

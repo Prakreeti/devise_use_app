@@ -3,7 +3,7 @@ class LikesController < ApplicationController
 
 	#to like a post
 	def create
-		@post = Post.find(params[:post_id])
+		@post = Post.find_by(:id => params[:post_id])
 		@like = current_user.likes.new(post: @post)
 		if @like.save
 			respond_to do |format|
@@ -15,8 +15,8 @@ class LikesController < ApplicationController
 
 	#to unlike a post
 	def destroy
-		@like = Like.find(params[:id])
-		@post = Post.find(@like.post_id)
+		@like = Like.find_by(:id => params[:id])
+		@post = Post.find_by(:id => @like.post_id)
 		@like.destroy
 		respond_to do |format|
 				format.html {redirect_to :back}

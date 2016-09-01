@@ -1,10 +1,9 @@
 class FriendRequest < ActiveRecord::Base
-
-	validate :not_self
-	validate :not_friends
-
 	belongs_to :user
   belongs_to :friend, class_name: 'User'
+
+  validate :not_self
+  validate :not_friends
 
   def accept
     user.friends << friend

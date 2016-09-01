@@ -4,8 +4,9 @@ class CommentsController < ApplicationController
 
 	#creates the comment
 	def create
-		@comment = Comment.create(comment_params.merge({post_id: @post.id,
+		@comment = Comment.new(comment_params.merge({post_id: @post.id,
 																		 user_id: current_user.id}))
+		@comment.save
 		redirect_to :back
 	end
 
@@ -27,10 +28,12 @@ class CommentsController < ApplicationController
 	end
 
 	private
+	
 	def comment_params
 		params.require(:comment).permit(:content, :reply_to,
 																		 :base_reply, :level)
 	end
+	
 	def setpost
 		@post = Post.includes(:comments).find_by(:id => params[:post_id])
 	end

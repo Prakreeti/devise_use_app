@@ -3,22 +3,7 @@
 		<h1 id="title">All Your Friends</h1>
 		<%= will_paginate %>
 		<% if @friends.any? %>
-			<table class="table table-hover">
-			  <thead>
-			  	<th>Friends</th>
-			  </thead>
-				<% @friends.each do |friend| %>
-					<tr>
-						<td>
-							<% user = User.find_by(:id => friend.id) %>
-							<%= link_to "#{user.name}", user_path(user) %>
-						</td>
-						<td>
-							<span class="glyphicon glyphicon-user"><%= link_to "Remove", friend_path(friend), :method => :delete %></span>
-						</td>
-					</tr>
-				<% end %>
-			</table>
+			<%= render "all_friends" %>
 		<% else %>
 			<p>No friends to show.</p>
 		<% end %>

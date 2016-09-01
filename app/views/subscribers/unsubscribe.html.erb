@@ -1,0 +1,15 @@
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="login">
+		  <%= form_for(:subscriber, action: :destroy, method: :delete) do |f| %>
+		    <div class="field">
+		      <%= f.label :enter_email_for_confirmation %>
+		      <%= f.text_field :email, autofocus: true, class: 'form-control' %>
+		    </div>
+		    <div class="field">
+		      <%= f.submit "Unsubscribe", class: "btn btn-primary" %>
+		    </div>
+		  <% end %>
+		</div>
+	</div>
+</div>

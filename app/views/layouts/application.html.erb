@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>DeviseUseApp</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <link type="stylesheet/css" href="assets/stylesheets/animation.css">
-</head>
+	<head>
+  	<title>DeviseUseApp</title>
+  	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  	<%= csrf_meta_tags %>
+  	<link type="stylesheet/css" href="assets/stylesheets/animation.css">
+	</head>
 
-<body>
-	<%= render 'layouts/header' %>
-	<div class="container-fluid">
-	<div style="margin-top: 50px; width:200px; margin-left: 300px;">	
-	</div>
+	<body>
+		<%= render 'layouts/header' %>
+		<%= render 'layouts/modal' %>
 		<% if current_user %>
 			<%= render 'layouts/leftnav' %>
 		<% end %>
 		<%= yield %>
-	</div>
-	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57c41656595f4df3"></script>
-</body>
+	</body>
 </html>

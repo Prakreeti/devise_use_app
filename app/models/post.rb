@@ -30,10 +30,9 @@ class Post < ActiveRecord::Base
 
 	private
 
-	 def send_email_to_subscribers
+	def send_email_to_subscribers
 	  Subscriber.all.each do |subscriber|
 	   SubscriptionMailer.send_email(subscriber.email, self).deliver_now
 	  end
-	 end
-	
+	end
 end

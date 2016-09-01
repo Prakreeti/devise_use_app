@@ -1,0 +1,16 @@
+<table class="table table-hover">
+	<thead>
+		<th>Friends</th>
+	</thead>
+	<% @friends.each do |friend| %>
+  	<tr>
+			<td>
+				<% user = User.find_by(:id => friend.id) %>
+				<%= link_to "#{user.name}", user_path(user) %>
+			</td>
+			<td>
+				<span class="glyphicon glyphicon-user"><%= link_to "Remove", friend_path(friend), :method => :delete %></span>
+			</td>
+		</tr>
+	<% end %>
+</table>

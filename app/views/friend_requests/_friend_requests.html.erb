@@ -1,0 +1,13 @@
+<table class="table table-hover">
+	<% @incoming.each do |request| %>
+		<tr>
+			<td><% user = User.find_by(:id => request.user_id) %>
+				<%= link_to "#{user.name}", user_path(user) %>
+			</td>
+			<td><%= link_to "Accept", friend_request_path(request), method: :put %>
+			</td>
+			<td><%= link_to "Reject", friend_request_path(request), method: :delete %>
+			</td>
+		</tr>
+	<% end %>
+</table>

@@ -1,12 +1,12 @@
 class CommentLikesController < ApplicationController
 	before_action :authenticate_user!
+
 	#creates a new like
 	def create
-		@comment = Comment.find(params[:comment_id])
+		@comment = Comment.find_by(:id => params[:comment_id])
 		@like = current_user.comment_likes.new(comment: @comment)
 		if @like.save
 			respond_to do |format|
-				format.html {redirect_to :back}
 				format.js
 			end
 		end
@@ -14,11 +14,10 @@ class CommentLikesController < ApplicationController
 	
 	#destroys the like
 	def destroy
-		@like = CommentLike.find(params[:id])
+		@like = CommentLike.find_by(:id => params[:id])
 		@comment =  Comment.find(@like.comment_id)
 		@like.destroy
 		respond_to do |format|
-				format.html {redirect_to :back}
 				format.js
 		end
 	end

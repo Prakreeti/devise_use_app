@@ -1,0 +1,39 @@
+<div id="user-profile">
+	<h1 id="title"><%= @user.name %></h1>
+	<h5 id="about-user">
+		<span class="glyphicon glyphicon-map-marker"><span>
+		<%= @user.city %>
+	</h5>
+
+	<% if !@user.about.blank? %>
+		<h5 id="about-user">"<%= @user.about %>"</h5>
+	<% end %>
+	
+	<div id="profile-image">
+		<div class="round-image-profile">
+			<%= image_tag(@user.avatar.url(:thumb)) %>
+		</div>
+	</div>
+
+	<p>
+		<%= link_to "Followers ", followers_user_path(@user) %>
+		<span class="badge"><%= @user.followers.count %></span> |
+		<%= link_to "Following", follows_user_path(@user) %>
+		<span class="badge"><%= @user.follows.count %></span>
+	</p>
+
+	<% if @user != current_user %>
+		<% if !current_user.friends.include?(@user) && (current_user.friend_requests.find_by(:friend_id => @user)) == nil %>
+			<%= link_to "Add Friend", friend_requests_path(:friend_id => @user), method: :post%> |
+		<% else %>
+			<%= link_to "Remove Friend", friend_path(@user), method: :delete %> |
+		<% end %>
+		<% if !current_user.follows.include?(@user) %>
+			<%= link_to "Follow", relationships_path(:followed_id => @user), method: :post%>
+		<% else %>
+			<% relationship = current_user.follow_relationships.find_by(:followed_id => @user) %>
+			<%= link_to "Unfollow", relationship_path(relationship),
+																				method: :delete %>
+		<% end %>
+	<% end %>
+</div>

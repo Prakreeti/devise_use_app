@@ -6,15 +6,18 @@
         <%= f.label :current_password %>(we need your current password to confirm your changes)
         <%= f.password_field :current_password, :autocomplete => "off", class: "form-control"  %>
       </div>
+
       <div class="field">
-        <%= f.label :password, " New Password" %><br />
+        <%= f.label :password, " New Password" %>
         <%= f.password_field :password, :autocomplete => "off", class: "form-control"  %>
       </div>
+
       <div class="field">
-        <%= f.label :password_confirmation %><br />
+        <%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation, class: "form-control" %>
-      </div><br>
-      <div class="action_container">
+      </div>
+      
+      <div class="field">
         <%= f.submit "Change Password", class: "btn btn-primary" %>
       </div>
     <% end %>
