@@ -1,0 +1,18 @@
+<h1 id="post-title"><%= post.title %></h1>
+<p>
+  <div id="post-content">
+    <%= post.content.html_safe %>
+  </div>
+  <% if post.image_file_name != nil %>
+    <div id="post-image">
+      <%= link_to image_tag(post.image.url(:large)), post.image.url %>
+    </div>
+  <% end %>
+  <% if post.tags.any? %>
+    <span class="glyphicon glyphicon-tags">
+      <% post.tags.each do |tag| %>
+        <%= link_to tag.name, tagged_path(:tag => tag.name) %>
+      <% end %>
+    </span>
+  <% end %>
+</p>

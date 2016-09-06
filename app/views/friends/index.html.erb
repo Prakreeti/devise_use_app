@@ -3,7 +3,7 @@
 		<h1 id="title">All Your Friends</h1>
 		<%= will_paginate %>
 		<% if @friends.any? %>
-			<%= render "all_friends" %>
+			<%= render partial: "all_friends", locals: {friends: @friends}  %>
 		<% else %>
 			<p>No friends to show.</p>
 		<% end %>

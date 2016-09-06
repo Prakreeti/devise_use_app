@@ -1,0 +1,24 @@
+<div id="liked_by_Modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-body">
+        <table class="table-hover">
+          <% post.liked_by.each do |user| %>
+            <tr>
+              <td>
+                <div class="round-image-50">
+                  <%= image_tag(user.avatar.url(:thumb)) %>
+                </div>
+              </td>
+              <td><%= link_to "#{user.name}", user_path(user) %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>

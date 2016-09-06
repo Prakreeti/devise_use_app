@@ -2,7 +2,7 @@ class FriendsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_friend, only: :destroy
 
-  #to create friends on acceptance of friend request
+  #to show friends of the user
   def index
     @friends = current_user.friends.paginate(page: params[:page])
   end
@@ -17,6 +17,6 @@ class FriendsController < ApplicationController
   private
 
   def set_friend
-    @friend = current_user.friends.find_by(:id => params[:id])
+    @friend = current_user.friends.find_by(id: params[:id])
   end
 end

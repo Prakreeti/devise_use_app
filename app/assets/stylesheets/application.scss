@@ -221,7 +221,13 @@
 }
 
 #about-user {
-  color: white
+  color: white;
+}
+
+#follows_modal, #followers_modal{
+  a{
+    color: blue;
+  }
 }
 
 .navbar {
@@ -390,4 +396,13 @@ table {
   border-radius: 5px;
   background-color: wheat;
   text-align: center;
+}
+
+.unsubscribe {
+  margin-top: 80px;
+  box-shadow: 10px 10px 5px #888888;
+  border: #E2E2E2 1px solid;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: white;
 }

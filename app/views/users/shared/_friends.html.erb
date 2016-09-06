@@ -1,0 +1,28 @@
+<div class="friends">
+	<%= form_tag controller: "users", action: "find_friends", method: "post" do%>
+		<p>Enter current city to find friends nearby:</p>
+	  <p><%= text_field_tag 'current_location' %></p>
+	  <p><%= submit_tag "Find", class: "btn-primary"%></p>
+	<% end %>
+
+	<% if $nearby_friends %>
+		<span class="glyphicon glyphicon-user"></span>Friends Near You:
+		<% $nearby_friends.each do |friend| %>
+			<table>
+				<tbody>
+					<tr>
+						<td>
+							<div class="round-image-50">
+								<%= image_tag(friend.avatar.url(:thumb)) %>
+							</div>
+						</td>
+						<td>
+							<%= link_to "#{friend.name}", user_path(friend) %>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		<% end %>
+		<% $nearby_friends = nil %>
+	<% end %>
+</div>

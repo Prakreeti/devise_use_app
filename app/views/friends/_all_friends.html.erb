@@ -2,7 +2,7 @@
 	<thead>
 		<th>Friends</th>
 	</thead>
-	<% @friends.each do |friend| %>
+	<% friends.each do |friend| %>
   	<tr>
 			<td>
 				<% user = User.find_by(:id => friend.id) %>

@@ -14,7 +14,7 @@
     <h1 id="title">Listing All Users</h1>
     <% if @users.any? %>
       <div id="users">
-      	<%= render 'show_all_users' %>
+      	<%= render partial: "users/shared/show_all_users", locals: {users: @users} %>
       </div>
     <% else %>
       No users found

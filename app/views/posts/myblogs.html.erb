@@ -12,7 +12,7 @@
     <%= link_to "Create a New Blog", new_post_path %>
     <% if @posts.any? %>
 	  	<div id="myposts"> 
-	    	<%= render "my_posts" %>
+	    	<%= render partial: "posts/shared/my_posts", locals:{posts: @posts} %>
 	    </div>
 	  <% else %>
 	  		<p>Create your first blog!</p>

@@ -15,11 +15,10 @@
     <h1 id="title">Listing All Posts</h1>
     <% if @posts.any? %>
     	<div id="posts">
-      	<%= render "all_posts" %>
+      	<%= render partial: "posts/shared/all_posts", locals: {posts: @posts} %>
       </div>
     <% else %>
       No posts found
     <% end %>
   </div>
 </div>
-

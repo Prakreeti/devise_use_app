@@ -30,7 +30,6 @@ class PostsController < ApplicationController
   #to create a new post
   def create
     @post = current_user.posts.new(post_params)
-    @post.posted_by = current_user.name
     if @post.save
       flash[:notice] = 'Post was successfully created.'
       redirect_to @post 
@@ -92,7 +91,7 @@ class PostsController < ApplicationController
   
     def set_post
       @post = Post.includes(:user, :tags).find_by(:id => params[:id])
-      if @post == nil
+      if @post.blank?
         redirect_to :posts,
          :flash => { :notice => "You tried to access a non-existing post." }
       end

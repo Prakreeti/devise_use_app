@@ -1,5 +1,5 @@
 <table class="table table-hover">
-	<% @incoming.each do |request| %>
+	<% incoming.each do |request| %>
 		<tr>
 			<td><% user = User.find_by(:id => request.user_id) %>
 				<%= link_to "#{user.name}", user_path(user) %>

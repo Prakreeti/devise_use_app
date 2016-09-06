@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, controllers: { registrations: 'registrations',
                      omniauth_callbacks: "users/omniauth_callbacks" }
                      
@@ -7,6 +8,8 @@ Rails.application.routes.draw do
   authenticated :user do
     root 'users#dashboard', as: :authenticated_root
   end
+
+  post 'users/find_friends', to: 'users#find_friends'
 
   # for the home page
   root 'public#public'
@@ -28,8 +31,6 @@ Rails.application.routes.draw do
 
   resources :friend_requests, only: [:create, :index, :destroy, :update]
   resources :friends, only: [:index, :destroy]  
-
-  get 'users/find_friends', to: 'users#find_friends'
 
   resources :relationships, only: [:create, :destroy]
 
@@ -54,8 +55,6 @@ Rails.application.routes.draw do
   post '/rate' => 'rater#create', :as => 'rate'
 
   get 'home', to: 'users#dashboard'
-
-  get '*a', :to => 'errors#routing'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

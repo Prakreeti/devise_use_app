@@ -34,14 +34,16 @@ gem 'bootstrap-will_paginate', '0.0.10'
 gem 'paperclip', '~> 4.1'
 #for rating
 gem 'ratyrate'
-#for WYSIWYG
-gem 'tinymce-rails'
 #for location
 gem 'geocoder'
 #for tagging
 gem 'acts-as-taggable-on'
 #for social sharing
 gem 'social-share-button'
+#for sending emails as a background job
+gem 'sidekiq'
+#for WYSIWYG editor with image uploading feature
+gem 'ckeditor'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

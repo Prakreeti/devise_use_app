@@ -1,13 +1,13 @@
-<%= tinymce_assets %>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= render 'post_details' %>
+    <%= render partial: "posts/shared/post_details", locals: {post: @post} %>
     <div id="rating">
       <%= link_to @post.user.name, '#' %>
       <%= rating_for @post, 'content', enable_half: true, half_show: true, cancel: true%>
     </div>
     <span id="post_likes_count"> 
-      <%= render "post_likes_count" %>
+      <%= render partial: "posts/shared/post_likes_count", locals: {post: @post} %>
+      <%= render partial: "posts/shared/liked_by_modal", locals: {post: @post} %>
     </span> 
     <% if !@post.liked_by.include?(current_user) %>
       <span id="like-span">

@@ -4,7 +4,7 @@ class FriendRequestsController < ApplicationController
 
   #create a new friend request
   def create
-    friend = User.find_by(:id => params[:friend_id])
+    friend = User.find_by(id: params[:friend_id])
     @friend_request = current_user.friend_requests.new(friend: friend)
     if @friend_request.save
       flash[:notice] = "Friend Request Sent"
@@ -39,6 +39,6 @@ class FriendRequestsController < ApplicationController
  	private
 
   def set_friend_request
-    @friend_request = FriendRequest.find_by(:id => params[:id])
+    @friend_request = FriendRequest.find_by(id: params[:id])
   end
 end

@@ -21,7 +21,8 @@ class Post < ActiveRecord::Base
 	acts_as_taggable_on :tags
 
 	def self.search(search)
-  	where("title LIKE ? OR content LIKE ?", "%#{search}%", "%#{search}%") 
+  	self.where("title LIKE :search OR content LIKE :search", 
+                {search: "%#{search}%"})
 	end
 
 	def to_param
@@ -32,7 +33,7 @@ class Post < ActiveRecord::Base
 
 	def send_email_to_subscribers
 	  Subscriber.all.each do |subscriber|
-	   SubscriptionMailer.send_email(subscriber.email, self).deliver_now
+	   SubscriptionMailer.send_email(subscriber.email, self).deliver_later
 	  end
 	end
 end

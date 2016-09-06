@@ -16,12 +16,12 @@ class UsersController < ApplicationController
 
 	#to edit the password of current user
 	def edit
-		@user = User.find_by(:id => current_user)
+		@user = User.find_by(id: current_user)
 	end
 
 	#to update the password of current user
 	def update
-		@user = User.find_by(:id => current_user)
+		@user = User.find_by(id: current_user)
 		if @user.update_with_password(user_params)
       flash[:notice] = "Password successfully updated."
 			redirect_to new_user_session_path
@@ -32,6 +32,8 @@ class UsersController < ApplicationController
 
 	#to show the profile of the users
 	def show
+    @follows_count = @user.follows.count
+    @followers_count = @user.followers.count
 	end
 
 	#to list the people current user follows
@@ -51,13 +53,15 @@ class UsersController < ApplicationController
   	else
   		@user = current_user
   		@posts = @user.feed
+      @follows_count = @user.follows.count
+      @followers_count = @user.followers.count
   	end
   end
 
   #to find friends nearby based on current location of the user
   def find_friends
 	 	$nearby_friends = current_user.friends.near(params[:current_location], 50)
-	 	redirect_to :back
+	 	redirect_to :home
   end
 
 	private
@@ -68,7 +72,7 @@ class UsersController < ApplicationController
   end
 
   def set_user
-  	@user = User.includes(:posts).find_by(:id => params[:id])
+  	@user = User.includes(:posts).find_by(id: params[:id])
     if @user == nil
       redirect_to :users,
          :flash => { :notice => "You tried to access a non-existing user." }

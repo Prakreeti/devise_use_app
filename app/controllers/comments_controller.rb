@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
 	before_action :authenticate_user!
-	before_action :setpost, only:[:create, :destroy, :show]
+	before_action :set_post, only:[:create, :destroy, :show]
 
 	#creates the comment
 	def create
@@ -12,19 +12,19 @@ class CommentsController < ApplicationController
 
 	#destroys the comment
 	def destroy
-	  @comment = @post.comments.find_by(:id => params[:id])
+	  @comment = @post.comments.find_by(id: params[:id])
 	  @comment.destroy
 	  redirect_to :back
 	end
 	
 	#for displaying the comments of a post
 	def show
-	  @comment = @post.comments.find_by(:id => params[:id])
+	  @comment = @post.comments.find_by(id: params[:id])
 	end
 
 	#to display the list of users who liked the comment
 	def liked_by
-		@users = Comment.includes(:liked_by).find_by(:id => params[:id]).liked_by
+		@users = Comment.includes(:liked_by).find_by(id: params[:id]).liked_by
 	end
 
 	private
@@ -34,7 +34,7 @@ class CommentsController < ApplicationController
 																		 :base_reply, :level)
 	end
 	
-	def setpost
-		@post = Post.includes(:comments).find_by(:id => params[:post_id])
+	def set_post
+		@post = Post.includes(:comments).find_by(id: params[:post_id])
 	end
 end
