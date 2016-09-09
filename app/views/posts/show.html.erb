@@ -7,9 +7,9 @@
     </div>
     <span id="post_likes_count"> 
       <%= render partial: "posts/shared/post_likes_count", locals: {post: @post} %>
-      <%= render partial: "posts/shared/liked_by_modal", locals: {post: @post} %>
+      <%= render partial: "posts/shared/liked_by_modal", locals: {users: @users} %>
     </span> 
-    <% if !@post.liked_by.include?(current_user) %>
+    <% if !@post.is_liked_by?(current_user) %>
       <span id="like-span">
         <span class="glyphicon glyphicon-thumbs-up">
           <%= link_to "Like", likes_path(:post_id => @post),method: :post, remote: true %>
@@ -23,6 +23,7 @@
         </span>
       </span>
     <% end %>
+
     <% if @post.user_id == current_user.id %>
       <div>
         <%= link_to 'Edit', edit_post_path(@post) %> |
@@ -35,8 +36,7 @@
 
     <% if @post.comments.exists? %>
       <p>Comments:</p>
-      <% comments =  @post.comments.includes(:user, :liked_by, :children).where("reply_to" => nil) %>
-      <%= render partial: "shared/comment", locals: {comments: comments, l: 0, post: @post} %>
+      <%= render partial: "shared/comment", locals: {comments: @comments, l: 0, post: @post} %>
     <% end %>
   </div>
 </div>

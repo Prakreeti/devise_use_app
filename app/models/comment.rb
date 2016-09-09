@@ -10,4 +10,12 @@ class Comment < ActiveRecord::Base
 	validates :user_id, presence: true
 	validates :post_id, presence: true
 	validates :content, presence: true
+
+	def has_been_liked_by
+		self.liked_by
+	end
+
+	def is_liked_by?(user)
+		self.liked_by.include?(user)
+	end
 end

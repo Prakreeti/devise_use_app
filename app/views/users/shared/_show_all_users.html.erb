@@ -29,24 +29,23 @@
           </td>
           <% if user != current_user %> 
             <td colspan="10">
-              <% if current_user.friends.include?(user) %>
+              <% if current_user.has_friend?(user) %>
                 <span class="glyphicon glyphicon-user"></span>
-              <% elsif FriendRequest.find_by(:friend_id => current_user, :user_id => user.id) %>
+              <% elsif user.has_sent_friend_request_to?(current_user)%>
                 <%= link_to "Respond to friend request", friend_requests_path %>
-              <% elsif current_user.friend_requests.find_by(:friend_id => user) %>
-                <% request = current_user.friend_requests.find_by(:friend_id => user.id) %>
-                <%= link_to "Remove Request", friend_request_path(request), method: :delete %>
+              <% elsif current_user.has_sent_friend_request_to?(user) %>
+                <% request = current_user.friend_requests.find_by(friend_id: user.id) %>
+                <%= render partial: "users/shared/remove_friend_request_link", locals: {friend: user, request: request} %>
               <% else %>
-                <span class="glyphicon glyphicon-user"><%= link_to "+", friend_requests_path(:friend_id => user),method: :post %></span>
-              <% end %>
-              
+                <%= render partial: "users/shared/add_friend_link", locals: {user: user} %>
+              <% end %>  
             </td>
             <td colspan="10">
-              <% if !current_user.follows.include?(user) %>
-                <%= link_to "Follow", relationships_path(:followed_id => user), method: :post  %>
+              <% if !current_user.is_following?(user) %>
+                <%= render partial: "users/shared/follow_link", locals: {user: user}%>
               <% else %>
-              <% relationship = current_user.follow_relationships.find_by(:followed_id => user) %>
-                <%= link_to "Unfollow",relationship_path(relationship), method: :delete %>
+                <% relationship = current_user.follow_relationships.find_by(followed_id: user) %>
+                <%= render partial: "users/shared/unfollow_link", locals: {user: user, relationship: relationship}%>
               <% end %>
             </td>
           <% end %>

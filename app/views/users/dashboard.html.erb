@@ -6,7 +6,7 @@
 			<div class="notice"><%= notice %></div>
     	<%= alert %>
     <% end %>
-		<div id="user-profile">
+		<div id="user_profile">
 			<h1 id="title"><%= @user.name %></h1>
 			<h5 id="about-user">
 				<span class="glyphicon glyphicon-map-marker"><span>
@@ -16,7 +16,7 @@
 				<h5 id="about-user">"<%= @user.about %>"</h5>
 			<% end %>
 
-			<div id="profile-image">
+			<div id="profile_image">
 				<div class="round-image-profile">
 					<%= image_tag(@user.avatar.url(:thumb)) %>
 				</div>
@@ -24,9 +24,9 @@
 
 			<p>
 				<%= link_to "Followers", "#", "data-toggle" => "modal", "data-target" => "#followers_modal" %>
-				<span class="badge"><%= @followers_count %></span> |
+				<span class="badge"><%= current_user.is_followed_by %></span> |
 				<%= link_to "Following", "#", "data-toggle" => "modal", "data-target" => "#follows_modal" %>
-				<span class="badge"><%= @follows_count %></span>
+				<span class="badge"><%= current_user.is_following %></span>
 				<%= render partial: "users/shared/followers_modal", locals: {user: @user} %>
 				<%= render partial: "users/shared/follows_modal", locals: {user: @user} %>
 			</p>

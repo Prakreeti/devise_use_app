@@ -9,9 +9,13 @@ class FriendsController < ApplicationController
 
   #to delete friends 
   def destroy
-    current_user.friends.destroy(@friend)
-    @friend.friends.destroy(current_user)
-    redirect_to :back
+    if current_user.remove_friend(@friend)
+      respond_to do |format|
+        flash[:notice] = "Friend Deleted"
+        format.html {redirect_to :back}
+        format.js
+      end
+    end
   end
 
   private

@@ -24,7 +24,8 @@ class CommentsController < ApplicationController
 
 	#to display the list of users who liked the comment
 	def liked_by
-		@users = Comment.includes(:liked_by).find_by(id: params[:id]).liked_by
+		comment = Comment.includes(:liked_by).find_by(id: params[:id])
+		@users = comment.has_been_liked_by									
 	end
 
 	private

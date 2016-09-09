@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <% if flash[:notice] %>
-      <div class="notice"><%= flash[:notice] %></div>
-    <% end %>
+    <div id="flash_notice">
+      <%= render partial: "users/shared/flash_notice" %>
+    </div>
     <div class="search-form">
       <%= form_tag(users_path, method: "get", id: "search-user-form") do %>
         <%= text_field_tag :search, params[:search], placeholder: "Search Users", value: nil%>

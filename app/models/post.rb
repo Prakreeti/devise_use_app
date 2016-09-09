@@ -29,11 +29,27 @@ class Post < ActiveRecord::Base
     [id, title.parameterize].join("-")
   end
 
+  def is_liked_by
+  	self.liked_by
+  end
+
+  def remove_post
+  	self.destroy
+  end
+
+  def has_comments
+  	self.comments.includes(:user, :liked_by, :children).where("reply_to" => nil)
+  end
+
+  def is_liked_by?(user)
+  	self.liked_by.include?(user)
+  end
+
 	private
 
 	def send_email_to_subscribers
 	  Subscriber.all.each do |subscriber|
-	   SubscriptionMailer.send_email(subscriber.email, self).deliver_later
+	  	SubscriptionMailer.send_email(subscriber.email, self).deliver_later
 	  end
 	end
 end

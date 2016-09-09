@@ -1,0 +1,4 @@
+<span id="add_friend_<%= user.id %>">
+  <span class="glyphicon glyphicon-user"><%= link_to "+", friend_requests_path(:friend_id => user),method: :post, remote: true %>
+  </span>
+</span>

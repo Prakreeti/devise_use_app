@@ -1,0 +1,1 @@
+<%= link_to "Pending Requests(#{FriendRequest.where("friend" => current_user).count})", friend_requests_path %> 

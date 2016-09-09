@@ -3,16 +3,16 @@
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
       <ul>
-      <% @post.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="field">
     <%= f.label :title %>
-    <%= f.text_field :title, class: "form-control input-lg "%>
+    <%= f.text_field :title, class: "input-lg" %>
   </div>
 
   <div class="field">
@@ -34,4 +34,3 @@
     <%= f.submit "Post", class: "input-lg btn btn-primary" %>
   </div>
 <% end %>
-

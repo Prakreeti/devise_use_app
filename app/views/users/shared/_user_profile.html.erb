@@ -1,41 +1,48 @@
-<div id="user-profile">
-	<h1 id="title"><%= @user.name %></h1>
-	<h5 id="about-user">
-		<span class="glyphicon glyphicon-map-marker"><span>
-		<%= @user.city %>
-	</h5>
+<div id="user_profile">
+	<h1 id="title"><%= user.name %></h1>
+	<% if !user.city.blank? %>
+		<h5 id="about_user">
+			<span class="glyphicon glyphicon-map-marker"><span>
+			<%= user.city %>
+		</h5>
+	<% end %>
 
-	<% if !@user.about.blank? %>
-		<h5 id="about-user">"<%= @user.about %>"</h5>
+	<% if !user.about.blank? %>
+		<h5 id="about-user">"<%= user.about %>"</h5>
 	<% end %>
 	
-	<div id="profile-image">
+	<div id="profile_image">
 		<div class="round-image-profile">
-			<%= image_tag(@user.avatar.url(:thumb)) %>
+			<%= image_tag(user.avatar.url(:thumb)) %>
 		</div>
 	</div>
 
 	<p>
 		<%= link_to "Followers", "#", "data-toggle" => "modal", "data-target" => "#followers_modal" %>
-		<span class="badge"><%= followers_count %></span> |
+		<span class="badge"><%= user.is_followed_by %></span> |
 		<%= link_to "Following", "#", "data-toggle" => "modal", "data-target" => "#follows_modal" %>
-		<span class="badge"><%= follows_count %></span>
-		<%= render partial: "users/shared/followers_modal", locals:{ user: @user} %>
-		<%= render partial: "users/shared/follows_modal", locals:{ user: @user} %>
+		<span class="badge"><%= user.is_following %></span>
+		<%= render partial: "users/shared/followers_modal", locals:{ user: user} %>
+		<%= render partial: "users/shared/follows_modal", locals:{ user: user} %>
 	</p>
 
-	<% if @user != current_user %>
-		<% if !current_user.friends.include?(@user) && (current_user.friend_requests.find_by(friend_id: @user)) == nil %>
-			<%= link_to "Add Friend", friend_requests_path(friend_id: @user), method: :post %> |
+	<% if user != current_user %>
+		<% if current_user.has_friend?(user) %>
+      <span class="glyphicon glyphicon-user"></span> 
+    <% elsif user.has_sent_friend_request_to?(current_user)%>
+      <%= link_to "Respond to friend request", friend_requests_path %> 
+    <% elsif current_user.has_sent_friend_request_to?(user) %>
+      <% request = current_user.friend_requests.find_by(friend_id: user.id) %>
+     	<%= render partial: "users/shared/remove_friend_request_link", locals: {friend: user, request: request} %> 
+    <% else %>
+      <%= render partial: "users/shared/add_friend_link", locals: {user: user} %>
+    <% end %> |
+
+		<% if !current_user.is_following?(user) %>
+			<%= render partial: "users/shared/follow_link", locals: {user: user}%>
 		<% else %>
-			<%= link_to "Remove Friend", friend_path(@user), method: :delete %> |
-		<% end %>
-		<% if !current_user.follows.include?(@user) %>
-			<%= link_to "Follow", relationships_path(followed_id: @user), method: :post %>
-		<% else %>
-			<% relationship = current_user.follow_relationships.find_by(followed_id: @user) %>
-			<%= link_to "Unfollow", relationship_path(relationship),
-																				method: :delete %>
+			<% relationship = current_user.follow_relationships.find_by(followed_id: user) %>
+			<%= render partial: "users/shared/unfollow_link", locals: {user: user, relationship: relationship}%>
 		<% end %>
 	<% end %>
 </div>

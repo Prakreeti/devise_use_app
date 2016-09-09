@@ -1,16 +1,18 @@
+<% will_paginate %>
 <table class="table table-hover">
 	<thead>
 		<th>Friends</th>
 	</thead>
 	<% friends.each do |friend| %>
-  	<tr>
+  	<tr id="my_friend_<%= friend.id %>">
 			<td>
 				<% user = User.find_by(:id => friend.id) %>
 				<%= link_to "#{user.name}", user_path(user) %>
 			</td>
 			<td>
-				<span class="glyphicon glyphicon-user"><%= link_to "Remove", friend_path(friend), :method => :delete %></span>
+				<span class="glyphicon glyphicon-user"><%= link_to "Remove", friend_path(friend), method: :delete, remote: true  %></span>
 			</td>
 		</tr>
 	<% end %>
 </table>
+<% will_paginate %>

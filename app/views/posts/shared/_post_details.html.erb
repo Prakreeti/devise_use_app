@@ -1,10 +1,10 @@
-<h1 id="post-title"><%= post.title %></h1>
+<div class="animated flipInX"> <h1 id="post_title"><%= post.title %></h1></div>
 <p>
-  <div id="post-content">
+  <div id="post_content">
     <%= post.content.html_safe %>
   </div>
   <% if post.image_file_name != nil %>
-    <div id="post-image">
+    <div id="post_image">
       <%= link_to image_tag(post.image.url(:large)), post.image.url %>
     </div>
   <% end %>

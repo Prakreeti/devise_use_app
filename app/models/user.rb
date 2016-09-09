@@ -88,6 +88,31 @@ class User < ActiveRecord::Base
                      OR user_id = :user_id", user_id: id)
   end
 
+  def has_friend?(friend)
+    self.friends.where(id: friend.id).present?
+  end
+
+  def remove_friend(friend)
+    self.friends.destroy(friend)
+    friend.friends.destroy(self)
+  end
+
+  def has_sent_friend_request_to?(friend)
+    self.friend_requests.where(:friend_id => friend).present?
+  end
+
+  def is_following?(user)
+    self.follows.include?(user)
+  end
+
+  def is_followed_by
+    self.followers.count
+  end
+
+  def is_following
+    self.follows.count
+  end
+
   #Storing city as the address to be used by geocoder 
   def address
     "#{city}"
@@ -118,6 +143,6 @@ class User < ActiveRecord::Base
   
   #implements searching users 
   def self.search(search) 
-    where("name LIKE ?  OR city LIKE ?", "%#{search}%", "%#{search}%")
+    where("name LIKE :search  OR city LIKE :search", {search: "%#{search}%"})
   end
 end

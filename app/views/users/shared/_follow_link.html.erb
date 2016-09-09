@@ -1,0 +1,3 @@
+<span  id="follow_span_<%= user.id%>">
+	<%= link_to "Follow", relationships_path(:followed_id => user), method: :post, remote: true %>
+</span>

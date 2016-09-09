@@ -1,0 +1,21 @@
+<div id="subscribers_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal_heading">Subscribe</h2>
+      </div>
+          <div id="subscribe_left_div">
+    				<%= form_tag(controller: "subscribers", action: "create", method: "post") do %>
+    					<h4>Email-id</h4>
+    					<p><%= text_field(:subscriber, :email, class: "input-lg") %></p>
+    					<p><%= submit_tag "subscribe", class: "btn btn-primary" %></p>
+    				<% end %>
+          </div>
+          <div id="subsribe_right_div", class="animated jello">
+            When you subscribe, you will receive mails when new posts are created.
+          </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>

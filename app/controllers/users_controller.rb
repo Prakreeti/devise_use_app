@@ -32,8 +32,7 @@ class UsersController < ApplicationController
 
 	#to show the profile of the users
 	def show
-    @follows_count = @user.follows.count
-    @followers_count = @user.followers.count
+    @posts_of_current_user = current_user.posts
 	end
 
 	#to list the people current user follows
@@ -53,8 +52,6 @@ class UsersController < ApplicationController
   	else
   		@user = current_user
   		@posts = @user.feed
-      @follows_count = @user.follows.count
-      @followers_count = @user.followers.count
   	end
   end
 

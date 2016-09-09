@@ -1,8 +1,8 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
-		<%= render partial: "users/shared/user_profile", locals: {follows_count: @follows_count, followers_count: @followers_count}%>
+		<%= render partial: "users/shared/user_profile", locals: {user: @user}%>
 		<% if @user.posts.any? %>
-			<%= render "shared/current_user_posts" %>
+			<%= render "users/shared/current_user_posts" %>
 		<% else %>
 				There are no posts.
 		<% end %>

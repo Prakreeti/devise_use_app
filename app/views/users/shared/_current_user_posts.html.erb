@@ -1,0 +1,30 @@
+<table class="table table-hover">
+	<thead>
+		<th>Posts</th>
+	</thead>
+	<% @posts_of_current_user.each do |post|%>
+		<tbody>
+			<tr>
+				<td>
+					<div class="box">
+						<div>
+							<h3><%= link_to "#{post.title}", post_path(post) %></h3>
+						</div>
+
+						<div><%= post.content.html_safe %></div>
+							<% if post.image_file_name != nil %>
+								<div><%= image_tag(post.image.url(:med)) %></div>
+							<% end %>
+
+						<div>
+							<%= link_to "#{post.user.name}", user_path(post.user_id) %>
+							<%= post.created_at %>
+						</div>
+						
+						<p class="read-more"><%= link_to "Read More", post_path(post), class: "button" %></p>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	<% end %>
+</table>

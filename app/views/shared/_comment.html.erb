@@ -3,7 +3,7 @@
     <% l = 50 %>
   <% end %>
   <% comments.order("created_at DESC").each do |comment| %>
-    <div id="reply-content">    
+    <div id="reply_content">    
       <strong><%= comment.user.name %></strong> -- "<%= comment.content %>"
       <div>
         <div>
@@ -11,7 +11,7 @@
             <%= render partial: "shared/comment_likes_count", locals: {comment: comment} %>
           </span>
            
-          <% if !comment.liked_by.include?(current_user) %>
+          <% if !comment.is_liked_by?(current_user) %>
             <span id="comment-like<%=comment.id%>">
               <span class="glyphicon glyphicon-thumbs-up">
                 <%= link_to "Like", comment_likes_path(:comment_id => comment), method: :post, remote: true %>
@@ -34,7 +34,7 @@
                 data: { confirm: 'Are you sure?' } %>    
           </span>
         <% end %>
-        <span id="time-ago"><%= time_ago_in_words(comment.created_at) %> ago
+        <span id="time_ago"><%= time_ago_in_words(comment.created_at) %> ago
           <% if (comment.children.length > 0) %>
             <%= link_to "All Replies", "javascript:void(0);", class: "comment-reply", id: "comment_show_#{comment.id}" %>
             <%= link_to "Hide Replies", "javascript:void(0);",  class: "comment-hide", id: "comment_hide_#{comment.id}" %>

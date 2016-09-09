@@ -1,0 +1,5 @@
+<% friend = @friend_request.friend %>
+$('#remove_friend_request_<%= friend.id %>').html("<%= escape_javascript(render partial: 'users/shared/add_friend_link', locals: {user: friend})%>");
+$('#flash_notice').html("<%= escape_javascript(render "users/shared/flash_notice")%>");
+$('#remove_<%=friend.id%>').remove();
+$('#pending').html("<%= escape_javascript(render partial: "layouts/count_pending_friends")%>");

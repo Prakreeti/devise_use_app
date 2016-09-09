@@ -1,0 +1,2 @@
+$('#my_friend_<%= @friend.id %>').remove();
+$('#count').html("<%= escape_javascript(render partial: "layouts/show_friends_count")%>");

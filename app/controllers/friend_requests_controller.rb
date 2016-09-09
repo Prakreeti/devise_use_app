@@ -4,14 +4,15 @@ class FriendRequestsController < ApplicationController
 
   #create a new friend request
   def create
-    friend = User.find_by(id: params[:friend_id])
-    @friend_request = current_user.friend_requests.new(friend: friend)
+    @friend = User.find_by(id: params[:friend_id])
+    @friend_request = current_user.friend_requests.new(friend: @friend)
     if @friend_request.save
-      flash[:notice] = "Friend Request Sent"
-    else
-      flash[:notice] = "Friend Request not sent"
+      respond_to do |format|
+        flash[:notice] = "Friend Request sent."
+        format.html {redirect_to :back}
+        format.js
+      end
     end
-    redirect_to :back
  	end
 
   #to list all incoming and outgoing friend requests
@@ -23,17 +24,23 @@ class FriendRequestsController < ApplicationController
   #to destroy friend request
 	def destroy
     if @friend_request.destroy
-      flash[:notice] = "Friend Request Deleted"
-    else
-      flash[:notice] = "Friend Request not Deleted"
+      respond_to do |format|
+        flash[:notice] = "Friend Request Deleted"
+        format.html {redirect_to :back}
+        format.js
+      end
     end
-    redirect_to :back
   end
 
   #to acccept friend request
   def update
-  	@friend_request.accept
-    redirect_to :back
+  	if @friend_request.accept
+      respond_to do |format|
+        flash[:notice] = "Friend Request Accepted"
+        format.html {redirect_to :back}
+        format.js
+      end
+    end
 	end
 
  	private

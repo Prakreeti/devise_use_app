@@ -17,6 +17,8 @@ class PostsController < ApplicationController
 
   #to show the content of each post including its comments and ratings
   def show
+    @users = @post.is_liked_by
+    @comments = @post.has_comments
   end
 
   def new
@@ -54,7 +56,7 @@ class PostsController < ApplicationController
 
   #to destroy a post
   def destroy
-    @post.destroy
+    @post.remove_post
     respond_to do |format|
       format.html { redirect_to posts_path, notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
@@ -84,7 +86,6 @@ class PostsController < ApplicationController
   #to find the users who have liked the post
   def liked_by
     post = Post.find_by(:id => params[:id])
-    @users = post.liked_by
   end
 
   private

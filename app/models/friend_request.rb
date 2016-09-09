@@ -14,10 +14,14 @@ class FriendRequest < ActiveRecord::Base
 	private
 
 	def not_self
-  	errors.add(:friend, "can't be equal to user") if user == friend
+  	errors.add(:friend, "can't be equal to user") if is_same_user?(user, friend) 
 	end
 
-  def not_friends
-    errors.add(:friend, 'is already added') if user.friends.include?(friend)
+  def is_same_user?(user, friend)
+    user == friend
   end
+
+  def not_friends
+    errors.add(:friend, 'is already added') if user.has_friend?(friend)
+  end  
 end

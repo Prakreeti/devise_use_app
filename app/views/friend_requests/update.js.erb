@@ -1,0 +1,4 @@
+<% friend = @friend_request.friend %>
+$('#remove_<%=friend.id%>').remove();
+$('#count').html("<%= escape_javascript(render partial: "layouts/show_friends_count")%>");
+$('#pending').html("<%= escape_javascript(render partial: "layouts/count_pending_friends")%>");

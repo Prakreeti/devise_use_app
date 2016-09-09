@@ -1,9 +1,10 @@
-<div id="wrapper-home">
-<%= render 'layouts/subscriber' %>
+<div id="wrapper_home">
+	<%= link_to "Subscribe", "#", "data-toggle" => "modal", "data-target" => "#subscribers_modal", class: "btn btn-primary", id:"subscribers_div_current_user" %>
+	<%= render 'subscriber' %>
 	<div id="columns">
 	<% if @posts.any? %>
-		<% @posts.includes(:user).order("updated_at DESC").each do |post| %>
-			<div class="pin box1">
+		<% @posts.each do |post| %>
+			<div class="pin box1 animated pulse">
 				<div><h2 id="post-heading"><%= link_to "#{post.title}", post_path(post) %></h2></div>
 				<div><%= link_to "#{post.user.name}", user_path(post.user_id) %>
 				</div>
@@ -14,7 +15,7 @@
 			</div>
 		<% end %>
 	<% else %>
-		<div id="home-image"></div>
+		<div id="home_image"></div>
 		<p>Create your first post to see it here. Happy Blogging!</p>
 	<% end %>
 	</div>

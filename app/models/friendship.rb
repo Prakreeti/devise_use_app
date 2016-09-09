@@ -7,6 +7,10 @@ class Friendship < ActiveRecord::Base
   private
 
   def not_self
-  	errors.add(:friend, "can't be equal to user") if user == friend
+  	errors.add(:friend, "can't be equal to user") if is_same_user?(user, friend)
 	end
+
+	def is_same_user?(user, friend)
+    user == friend
+  end
 end

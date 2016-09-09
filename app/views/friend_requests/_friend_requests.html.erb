@@ -1,12 +1,18 @@
 <table class="table table-hover">
 	<% incoming.each do |request| %>
-		<tr>
-			<td><% user = User.find_by(:id => request.user_id) %>
-				<%= link_to "#{user.name}", user_path(user) %>
+		<tr id="remove_<%=request.friend.id%>">
+			<td>
+				<%= link_to "#{request.user.name}", user_path(request.user) %>
 			</td>
-			<td><%= link_to "Accept", friend_request_path(request), method: :put %>
+			<td>
+				<span id="remove_request_<%= request.friend.id %>">
+					<%= link_to "Accept", friend_request_path(request), method: :put, remote: true %>
+				<span>
 			</td>
-			<td><%= link_to "Reject", friend_request_path(request), method: :delete %>
+			<td>
+				<span id="remove_request_<%= request.friend.id %>">
+  				<%= link_to "Remove Request", friend_request_path(request), method: :delete, remote: true %>
+				</span>
 			</td>
 		</tr>
 	<% end %>
