@@ -13,6 +13,10 @@ class PostsController < ApplicationController
       @posts = Post.paginate(page: params[:page])
               .includes(:user).order("updated_at DESC")
     end
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   #to show the content of each post including its comments and ratings
@@ -23,10 +27,18 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   #to edit a post
   def edit
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   #to create a new post
@@ -46,10 +58,10 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
-        format.json { render :show, status: :ok, location: @post }
+        format.js
       else
         format.html { render :edit }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end

@@ -1,0 +1,11 @@
+<%= form_for([post, post.comments.build], remote: true) do |f| %>
+        <%= f.hidden_field :reply_to, value: comment.id %>
+        <%= f.hidden_field :level, value: comment.level + 1 %>
+          <% if !comment.base_reply %>
+            <%= f.hidden_field :base_reply, value: comment.id %>
+          <% else %>
+            <%= f.hidden_field :base_reply, value: comment.base_reply %>
+          <% end %>   
+        <%= f.text_area :content, class: 'form-control new-reply' %><br>
+        <%= f.submit class:"btn btn-primary" %>
+      <% end %>

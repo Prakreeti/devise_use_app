@@ -1,7 +1,16 @@
-<%= form_for([@post, @post.comments.build]) do |f| %>
-	<%= f.text_area :content, class: 'form-control' %><br>
-	<%= f.submit class:"btn btn-primary" %>
-<% end %>
-<% if @post.user_id == current_user %>
-	<%= link_to 'Edit', edit_post_path(@post) %> |
-<% end %>
+<div class="comment-form-div">
+	<div id="comment_form_image">
+		<div class="round-image-50">
+      <%= image_tag(@post.user.avatar.url(:thumb)) %>
+    </div>
+	</div>
+	<div id="comment_form_content">
+	<%= form_for([@post, @post.comments.build], remote: true, class: "new-comment-form") do |f| %>
+		<%= f.text_field :content, class: 'form-control field new-comment' %>
+		<%= f.submit class:"btn btn-primary field" %>
+	<% end %>
+	<% if @post.user_id == current_user %>
+		<%= link_to 'Edit', edit_post_path(@post) %> |
+	<% end %>
+	</div>
+</div>

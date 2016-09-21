@@ -15,7 +15,18 @@
     <h1 id="title">Listing All Posts</h1>
     <% if @posts.any? %>
     	<div id="posts">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Posted By</th>
+            </tr>
+          </thead>
+        </table>
       	<%= render partial: "posts/shared/all_posts", locals: {posts: @posts} %>
+        <div id="infinite-scrolling">
+          <%= will_paginate %>
+        </div>
       </div>
     <% else %>
       No posts found

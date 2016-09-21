@@ -6,7 +6,6 @@ class RelationshipsController < ApplicationController
     @user = User.find_by(id: params[:followed_id])
     if current_user.follow(@user)
       respond_to do |format|
-        flash[:notice] = "You followed #{@user.name}."
         format.html {redirect_to :back}
         format.js
       end
@@ -18,7 +17,6 @@ class RelationshipsController < ApplicationController
     @user = Relationship.find_by(id: params[:id]).followed
     if current_user.unfollow(@user)
       respond_to do |format|
-          flash[:notice] = "You unfollowed #{@user.name}."
           format.html {redirect_to :back}
           format.js 
       end

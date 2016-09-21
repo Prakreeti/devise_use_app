@@ -3,8 +3,10 @@ class SubscribersController < ApplicationController
 	def create
     @subscriber = Subscriber.new(subscriber_params)
     if @subscriber.save
-      flash[:notice] = "You have been subscribed"
-      redirect_to :back
+      respond_to do |format|
+        format.html {redirect_to :back}
+        format.js
+      end
     end
   end
 
@@ -14,7 +16,7 @@ class SubscribersController < ApplicationController
   def destroy
     @subscriber = Subscriber.find_by(email: params[:subscriber][:email])
     if @subscriber.destroy
-      flash[:notice] = "You have been unsubscribed"
+      flash[:notice] = "You have unsubscribed."
       redirect_to root_path
     end
   end

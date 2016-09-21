@@ -2,10 +2,7 @@
 	<%= render "layouts/logged_in_subscriber" %>
 	<%= render "users/shared/friends" %>
 	<div class="col-md-6 col-md-offset-3">
-		<% if flash[:notice] %>
-			<div class="notice"><%= notice %></div>
-    	<%= alert %>
-    <% end %>
+		<div id="flash_notice"><div class="notice"></div></div>
 		<div id="user_profile">
 			<h1 id="title"><%= @user.name %></h1>
 			<h5 id="about-user">

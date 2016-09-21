@@ -8,7 +8,6 @@ class FriendRequestsController < ApplicationController
     @friend_request = current_user.friend_requests.new(friend: @friend)
     if @friend_request.save
       respond_to do |format|
-        flash[:notice] = "Friend Request sent."
         format.html {redirect_to :back}
         format.js
       end
@@ -25,7 +24,6 @@ class FriendRequestsController < ApplicationController
 	def destroy
     if @friend_request.destroy
       respond_to do |format|
-        flash[:notice] = "Friend Request Deleted"
         format.html {redirect_to :back}
         format.js
       end

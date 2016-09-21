@@ -159,7 +159,7 @@
 
 #convey_logo {
   float: left;
-  margin: 0; 
+  margin-left: 0; 
 }
 
 #reply_content {
@@ -167,6 +167,7 @@
   margin-bottom: 5px;
   padding-left: 10px;
   padding-right: 10px;
+  padding-top: 10px;
   border: 1px #929698 dashed;
   border-radius: 5px; 
   word-wrap: break-word;  
@@ -337,6 +338,9 @@ table {
 
 #post-heading {
   margin-top: 0px;
+  a:hover {
+    color: green;
+  }
 }
 
 #wrapper_home {
@@ -364,6 +368,14 @@ table {
   padding-bottom: 5px;
   opacity: 1;
   width: 190px;
+  border-radius: 15px;
+}
+
+.pin:hover {
+  width: 200px;
+  height: 250px;
+  background-color: black;
+  z-index: 10;
 }
 
 .pin img {
@@ -423,4 +435,113 @@ table {
   float: right;
   width: 50%;
   padding-top: 47px;
+}
+#flash_notice {
+  display: none;
+}
+
+#top_link {
+  float: left;
+  margin-top: 10px;
+}
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+    background-image: url("writing2.gif");
+    background-repeat: no-repeat;
+    background-position: center; 
+}
+
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+#overlay_text {
+  margin-top: 100px;
+  color: white; 
+  text-align: center; 
+  font-size: xx-large;
+}
+
+#login_modal_buttons{
+  margin-top: 350px;
+  #left_div{
+    float: left;
+    width: 50%;
+    #left_button{
+      width: 120px; 
+      float: right; 
+      margin-right: 5px;
+      color: white;
+    }
+  }
+  #right_div{
+    float: right; 
+    width: 50%;
+    #right_button{
+      width: 120px; 
+      float: left; 
+      margin-left: 5px;
+      color: white;
+    }
+  }
+}
+
+.drop-down-post{
+  float: right;
+}
+
+.dropdown-menu{
+  min-width: 50px;
+  padding-left: 10px;
+}
+
+#comment_form_image {
+  float: left;
+}
+
+#comment_form_content {
+  float: right;
+  width: 90%;
+}
+
+.comment-form-div {
+  height: 100px;
+}
+
+.comment-options {
+  float: right;
 }

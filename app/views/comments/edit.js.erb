@@ -1,0 +1,1 @@
+$("#whole_comment_<%= @comment.id %>").html("<%= j render partial:'comments/shared/edit_comment_form', locals: {post: @post, comment: @comment}%>");

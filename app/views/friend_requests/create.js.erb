@@ -1,3 +1,4 @@
 <% request = FriendRequest.find_by(user_id: current_user.id, friend_id: @friend.id) %>
 $('#add_friend_<%= @friend.id %>').html("<%= escape_javascript(render partial: 'users/shared/remove_friend_request_link', locals: {friend: @friend, request: request})%>");
-$('#flash_notice').html("<%= escape_javascript(render "users/shared/flash_notice")%>");
+$(".notice").html("Friend Request sent to <%= @friend.name %>.").show();
+$("#flash_notice").show();

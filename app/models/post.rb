@@ -20,6 +20,8 @@ class Post < ActiveRecord::Base
 
 	acts_as_taggable_on :tags
 
+	self.per_page = 15
+
 	def self.search(search)
   	self.where("title LIKE :search OR content LIKE :search", 
                 {search: "%#{search}%"})
@@ -38,7 +40,7 @@ class Post < ActiveRecord::Base
   end
 
   def has_comments
-  	self.comments.includes(:user, :liked_by, :children).where("reply_to" => nil)
+  	self.comments.includes(:user, :liked_by, :children).where(reply_to: nil)
   end
 
   def is_liked_by?(user)
@@ -49,7 +51,7 @@ class Post < ActiveRecord::Base
 
 	def send_email_to_subscribers
 	  Subscriber.all.each do |subscriber|
-	  	SubscriptionMailer.send_email(subscriber.email, self).deliver_later
+	  	SubscriptionMailer.delay.send_email(subscriber.email, self)
 	  end
 	end
 end

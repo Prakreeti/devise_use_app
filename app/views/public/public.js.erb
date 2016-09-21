@@ -1,5 +1,5 @@
 $('#infinite-scrolling').hide();
-$('#posts').append('<%= j render partial: "posts/shared/all_posts", locals: {posts: @posts} %>');
+$('#posts').append('<%= j render partial: "all_posts", locals: {posts: @posts} %>');
 
 <% if @posts.next_page %>
   $('#infinite-scrolling').html("<%=j will_paginate(@posts) %>");

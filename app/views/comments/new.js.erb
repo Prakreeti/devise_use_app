@@ -1,0 +1,1 @@
+$("#whole_comment_<%= @comment.reply_to %>").append("<%= escape_javascript(render partial: 'comments/shared/reply_comment_form', locals: {comment: @comment, post: @post) %>");

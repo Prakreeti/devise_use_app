@@ -18,8 +18,19 @@
 //= require ckeditor/init
 //= require_tree .
 
+
 $(document).ready(function() {
   
+  var showOverlay = function() {
+    $("#myNav").width("100%");
+  };
+  
+  var closeOverlay = function() {
+    $(document).on('click','.closebtn', function(){
+      $("#myNav").width("0%");
+    });
+  };
+
   var showReplies = function(){
       $(document).on('click','.comment-reply', function() {
       $("#replies_all_" + ($(this).attr('id').split("_"))[2]).toggle();
@@ -42,7 +53,9 @@ $(document).ready(function() {
     });
   };
 
+  showOverlay();
+  closeOverlay();
   showReplies();
   hideReplies();
-  showReplyForm();
+  showReplyForm();  
 });

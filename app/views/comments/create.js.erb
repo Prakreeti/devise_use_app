@@ -1,0 +1,8 @@
+<% if(!@comment.reply_to) %>
+	$(".new-comment").val('');
+	$("#base_comment").append("<%= escape_javascript(render partial: 'comments/shared/print_comment', locals: {comment: @comment, post: @post, l: 0}) %>");
+<% else %>
+	$(".new-reply").val('');
+	$("#reply_print_<%= @comment.reply_to %>").prepend("<%= escape_javascript(render partial: 'comments/shared/print_comment', locals: {comment: @comment, post: @post, l: 43 }) %>");
+	$("#reply_div<%= @comment.reply_to %>").hide();
+<% end %>

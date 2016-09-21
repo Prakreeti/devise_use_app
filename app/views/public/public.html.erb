@@ -1,22 +1,32 @@
+<div id="myNav" class="overlay">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <div id="overlay_text">Keep calm and BLOG on.</div>
+  <div id="login_modal_buttons">
+	  <div id="left_div">
+	  	<a href="#" data-toggle="modal" data-target="#login_modal" class="btn btn-primary" id="left_button" >Login</a>
+	  </div>
+	  <div id="right_div">
+	  	<a href="#" data-toggle="modal" data-target="#myModal" class="btn btn-danger", id="right_button">Help</a>
+	  </div>
+	</div>
+</div>
+<%= render "login_modal" %>
 <div id="wrapper_home">
 	<%= link_to "Subscribe", "#", "data-toggle" => "modal", "data-target" => "#subscribers_modal", class: "btn btn-primary", id:"subscribers_div_current_user" %>
 	<%= render 'subscriber' %>
 	<div id="columns">
-	<% if @posts.any? %>
-		<% @posts.each do |post| %>
-			<div class="pin box1 animated pulse">
-				<div><h2 id="post-heading"><%= link_to "#{post.title}", post_path(post) %></h2></div>
-				<div><%= link_to "#{post.user.name}", user_path(post.user_id) %>
-				</div>
-				<div><%= post.content.html_safe %></div>
-				<% if post.image_file_name != nil %>
-					<div><%= image_tag(post.image.url(:large)) %></div>
-				<% end %>
+		<% if @posts.any? %>
+			<div id="posts"><%= render partial: "all_posts", locals: {posts: @posts} %>
+			<div id="infinite-scrolling"><%= will_paginate @posts %></div>
 			</div>
+		<% else %>
+			<div id="home_image"></div>
+			<p>Create your first post to see it here. Happy Blogging!</p>
 		<% end %>
-	<% else %>
-		<div id="home_image"></div>
-		<p>Create your first post to see it here. Happy Blogging!</p>
-	<% end %>
 	</div>
+	<span id="top_link">
+    <a href="#top" class="well well-sm" onclick="$('html,body').animate({scrollTop:0},'fast');">
+      <i class="glyphicon glyphicon-chevron-up"></i>
+    </a>
+	</span>
 </div>

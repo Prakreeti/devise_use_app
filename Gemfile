@@ -44,6 +44,7 @@ gem 'social-share-button'
 gem 'sidekiq'
 #for WYSIWYG editor with image uploading feature
 gem 'ckeditor'
+gem 'therubyracer'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,3 +1,4 @@
+<div id="printing-post">
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= render partial: "posts/shared/post_details", locals: {post: @post} %>
@@ -5,18 +6,20 @@
       <%= link_to @post.user.name, '#' %>
       <%= rating_for @post, 'content', enable_half: true, half_show: true, cancel: true%>
     </div>
+
     <span id="post_likes_count"> 
       <%= render partial: "posts/shared/post_likes_count", locals: {post: @post} %>
       <%= render partial: "posts/shared/liked_by_modal", locals: {users: @users} %>
-    </span> 
+    </span>
+
     <% if !@post.is_liked_by?(current_user) %>
       <span id="like-span">
         <span class="glyphicon glyphicon-thumbs-up">
-          <%= link_to "Like", likes_path(:post_id => @post),method: :post, remote: true %>
+          <%= link_to "Like", likes_path(post_id: @post),method: :post, remote: true %>
         </span>
       </span>   
     <% else %>
-      <% like = current_user.likes.find_by(:post_id => @post)  %>
+      <% like = current_user.likes.find_by(post_id: @post)  %>
       <span id="unlike-span">
         <span class="glyphicon glyphicon-thumbs-down">
           <%= link_to "Unlike", like_path(like),method: :delete, remote: true %>
@@ -24,20 +27,21 @@
       </span>
     <% end %>
 
-    <% if @post.user_id == current_user.id %>
-      <div>
-        <%= link_to 'Edit', edit_post_path(@post) %> |
-        <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' } %>
-      </div>
-    <% end %>
-
     <h5>Add a comment:</h5>
     <%= render "shared/new_comment_form" %>
+    <div id="base_comment"></div>
 
     <% if @post.comments.exists? %>
-      <p>Comments:</p>
       <%= render partial: "shared/comment", locals: {comments: @comments, l: 0, post: @post} %>
     <% end %>
+
+    <span id="top_link">
+      <a href="#top" class="well well-sm" onclick="$('html,body').animate({scrollTop:0},'fast');">
+        <i class="glyphicon glyphicon-chevron-up"></i>
+      </a>
+    </span>
+    
   </div>
+</div>
 </div>
       

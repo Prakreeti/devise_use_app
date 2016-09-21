@@ -3,63 +3,28 @@
     <% l = 50 %>
   <% end %>
   <% comments.order("created_at DESC").each do |comment| %>
-    <div id="reply_content">    
-      <strong><%= comment.user.name %></strong> -- "<%= comment.content %>"
-      <div>
-        <div>
-          <span id="comment-likes-count<%= comment.id%>">
-            <%= render partial: "shared/comment_likes_count", locals: {comment: comment} %>
-          </span>
-           
-          <% if !comment.is_liked_by?(current_user) %>
-            <span id="comment-like<%=comment.id%>">
-              <span class="glyphicon glyphicon-thumbs-up">
-                <%= link_to "Like", comment_likes_path(:comment_id => comment), method: :post, remote: true %>
-              </span>
-            </span> 
-          <% else %>
-            <% like = current_user.comment_likes.find_by(:comment_id =>comment) %>
-            <span id="comment-unlike<%=comment.id%>">
-              <span class="glyphicon glyphicon-thumbs-down">
-                <%= link_to "Unlike", comment_like_path(like), method: :delete, remote: true %>
-              </span>
-            </span>
-          <% end %>
-        </div>
-        <%= link_to "Reply", "javascript:void(0);", 
-                  id: "addcomment_#{comment.id}", class: "reply"%>
-        <% if comment.user_id == current_user.id %>
-          <span> | <%= link_to 'Destroy', [comment.post, comment],
-                method: :delete,
-                data: { confirm: 'Are you sure?' } %>    
-          </span>
-        <% end %>
-        <span id="time_ago"><%= time_ago_in_words(comment.created_at) %> ago
-          <% if (comment.children.length > 0) %>
-            <%= link_to "All Replies", "javascript:void(0);", class: "comment-reply", id: "comment_show_#{comment.id}" %>
-            <%= link_to "Hide Replies", "javascript:void(0);",  class: "comment-hide", id: "comment_hide_#{comment.id}" %>
-          <% end %>
-        </span>
-      </div>
-    </div>
-    
+    <%= render partial: "comments/shared/print_comment", locals: {comment: comment, l: 0} %>
+
     <div class="replies" id="<%= "replies_all_#{comment.id}" %>">
       <% comments = comment.children.includes(:post, :liked_by, :user) %>
       <%= render partial: "shared/comment", locals: {comments: comments, l: l * 0.9, post: post} %>
     </div>
     
+    <div id="reply_print_<%= "#{comment.id}"%>" %></div>
+
     <div  id="reply_div<%= "#{comment.id}" %>", class="add-reply">
-      <%= form_for([post, post.comments.build]) do |f| %>
-        <%= f.hidden_field :reply_to, :value => comment.id %>
-        <%= f.hidden_field :level, :value => comment.level + 1 %>
+      <%= form_for([post, post.comments.build], remote: true) do |f| %>
+        <%= f.hidden_field :reply_to, value: comment.id %>
+        <%= f.hidden_field :level, value: comment.level + 1 %>
           <% if !comment.base_reply %>
-            <%= f.hidden_field :base_reply, :value => comment.id %>
+            <%= f.hidden_field :base_reply, value: comment.id %>
           <% else %>
-            <%= f.hidden_field :base_reply, :value => comment.base_reply %>
+            <%= f.hidden_field :base_reply, value: comment.base_reply %>
           <% end %>   
-        <%= f.text_area :content, class: 'form-control' %><br>
+        <%= f.text_area :content, class: 'form-control new-reply' %><br>
         <%= f.submit class:"btn btn-primary" %>
       <% end %>
     </div>
+
   <% end %>
 </div> 

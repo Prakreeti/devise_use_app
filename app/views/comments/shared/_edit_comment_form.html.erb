@@ -1,0 +1,6 @@
+<%= form_for([post, comment], method: :put,
+											remote: true, id: "comment_edit_form#{comment.id}") do |f| %>
+	<%= f.text_area :content, autocomplete: "off", class: 'form-control', 
+															id: "comment_edit_content#{comment.id}", value: comment.content %>
+	<%= f.submit class:"btn btn-primary field" %>
+<% end %>
