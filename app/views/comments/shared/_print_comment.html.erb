@@ -1,9 +1,9 @@
 <div id="whole_comment_<%= comment.id %>" style=" margin-left: <%= l %>px; "> 
-  <div class="round-image-50"; style="float: left;">
-    <%= image_tag(comment.user.avatar.url(:thumb)) %>
-  </div>
   <div id="reply_content"> 
-    <div style="float: left;">
+    <div class="round-image-50"; style="float: left;">
+      <%= image_tag(comment.user.avatar.url(:thumb)) %>
+    </div>
+    <div id="reply_comment_content_div">
       <strong><%= comment.user.name %></strong>
         <span id="time_ago">
           --<%= time_ago_in_words(comment.created_at) %> ago 
@@ -33,10 +33,6 @@
       </div>
       <%= link_to "Reply", "javascript:void(0);", 
                   id: "addcomment_#{comment.id}", class: "reply"%> 
-
-      <%= link_to "Reply2", new_post_comment_path(@post, comment), 
-                  id: "addcomment_#{comment.id}", class: "reply",
-                                                    remote: true%> 
 
       <% if comment.user_id == current_user.id %>
         <div class="comment-options"> 
