@@ -1,6 +1,6 @@
 <div id="user_profile">
 	<h1 id="title"><%= user[:name] %></h1>
-	<% if !user[:city].blank? %>
+	<% if user[:city].any? %>
 		<h5 id="about_user">
 			<span class="glyphicon glyphicon-map-marker"><span>
 			<%= user[:city] %>
