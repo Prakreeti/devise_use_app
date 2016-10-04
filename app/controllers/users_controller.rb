@@ -4,14 +4,15 @@ class UsersController < ApplicationController
 
 	#to show all users using pagination
 	def index
-		if params[:search]
+    if params[:search]
       @users = User.search(params[:search])
-      				.paginate(page: params[:page])
-      				.order("updated_at DESC")
+              .paginate(page: params[:page])
+              .order("updated_at DESC")
     else
       @users = User.paginate(page: params[:page])
-      				.order("updated_at DESC")
+              .order("updated_at DESC")
     end
+    user_collection
 	end
 
 	#to edit the password of current user
@@ -32,7 +33,7 @@ class UsersController < ApplicationController
 
 	#to show the profile of the users
 	def show
-    @posts_of_current_user = current_user.posts
+    about_user
 	end
 
 	#to list the people current user follows
@@ -74,5 +75,38 @@ class UsersController < ApplicationController
       redirect_to :users,
          :flash => { :notice => "You tried to access a non-existing user." }
     end
+  end
+
+  def user_collection
+    @users_collection = []
+    @all_users = @users
+    @all_users.each do |user|
+      each_user = { name: user.name, city: user.city, fb_profile: user.fb_profile,
+          user: user, avatar: user.avatar,
+          is_friend: current_user.has_friend?(user),
+          has_got_friend_request: current_user.has_sent_friend_request_to?(user),
+          has_sent_friend_request: user.has_sent_friend_request_to?(current_user),
+          friendship: current_user.friendship(user),
+          friend_request_sent: current_user.friend_request(user),
+          is_followed: current_user.is_following?(user),
+          follow_relation: current_user.follow_relation(user)  }
+      @users_collection << each_user
+    end
+  end
+
+  def about_user
+    @about_user = {name: @user.name, city: @user.city,
+        about: @user.about, avatar: @user.avatar, 
+        followers_count: @user.is_followed_by,
+        following_count: @user.is_following,
+        is_friend: current_user.has_friend?(@user),
+        has_got_friend_request: current_user.has_sent_friend_request_to?(@user),
+        has_sent_friend_request: @user.has_sent_friend_request_to?(current_user),
+        friendship: current_user.friendship(@user),
+        friend_request_sent: current_user.friend_request(@user),
+        is_followed: current_user.is_following?(@user),
+        follow_relation: current_user.follow_relation(@user),
+        posts: @user.posts,
+        user: @user }
   end
 end

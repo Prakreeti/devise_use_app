@@ -8,6 +8,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span class="glyphicon glyphicon-cog"></span>
           </a>
+          
           <div class="dropdown-menu">
             <%= link_to "<i class=\"glyphicon glyphicon-pencil\"></i>".html_safe, edit_post_path(@post), remote: true %>
             <%= link_to "<i class=\"glyphicon glyphicon-trash\"></i>".html_safe, @post, method: :delete, data: { confirm: 'Are you sure?' } %>

@@ -8,6 +8,7 @@ class Post < ActiveRecord::Base
 	has_many :liked_by, through: :likes, source: :user
 	
 	validates :user_id, presence: true
+	validates :title,  presence: true
 	validates :content, presence: true
 
 	has_attached_file :image,

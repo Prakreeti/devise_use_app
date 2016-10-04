@@ -10,13 +10,13 @@
 	  </div>
 	</div>
 </div>
-<%= render "login_modal" %>
+<%= render "public/shared/login_modal" %>
 <div id="wrapper_home">
 	<%= link_to "Subscribe", "#", "data-toggle" => "modal", "data-target" => "#subscribers_modal", class: "btn btn-primary", id:"subscribers_div_current_user" %>
-	<%= render 'subscriber' %>
+	<%= render 'public/shared/subscriber' %>
 	<div id="columns">
 		<% if @posts.any? %>
-			<div id="posts"><%= render partial: "all_posts", locals: {posts: @posts} %>
+			<div id="posts"><%= render partial: "public/shared/all_posts", locals: {posts: @posts} %>
 			<div id="infinite-scrolling"><%= will_paginate @posts %></div>
 			</div>
 		<% else %>

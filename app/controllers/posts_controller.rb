@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-  before_action :check_user, only: [:edit, :update]
+  before_action :check_user, only: [:edit, :update, :destroy]
 
   #to display all posts with pagination
   def index

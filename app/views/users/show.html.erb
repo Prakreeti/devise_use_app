@@ -1,9 +1,9 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
 		<div id="flash_notice"><div class="notice"></div></div>
-		<%= render partial: "users/shared/user_profile", locals: {user: @user}%>
-		<% if @user.posts.any? %>
-			<%= render "users/shared/current_user_posts" %>
+		<%= render partial: "users/shared/user_profile", locals: {user: @about_user}%>
+		<% if @about_user[:posts].any? %>
+			<%= render partial: "users/shared/current_user_posts", locals: {posts: @about_user[:posts] } %>
 		<% else %>
 				There are no posts.
 		<% end %>

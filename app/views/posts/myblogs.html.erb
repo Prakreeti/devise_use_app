@@ -9,19 +9,13 @@
       <% end %>
     </div>
     <h1 id="title">Listing Your Posts</h1>
-    <%= link_to "Create a New Blog", new_post_path %>
+    <%= link_to "<i class=\"glyphicon glyphicon-plus\"></i> Create a new blog.".html_safe, new_post_path%>
     <% if @posts.any? %>
 	  	<div id="myposts"> 
-	    	<%= render partial: "posts/shared/my_posts", locals:{posts: @posts} %>
+	    	<%= render partial: "posts/shared/my_posts", locals: {posts: @posts} %>
 	    </div>
 	  <% else %>
 	  		<p>Create your first blog!</p>
 	  <% end %>
   </div>
 </div>
-
-    
-
-    
-  
-

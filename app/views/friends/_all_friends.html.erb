@@ -10,7 +10,7 @@
 				<%= link_to "#{user.name}", user_path(user) %>
 			</td>
 			<td>
-				<span class="glyphicon glyphicon-user"><%= link_to "Remove", friend_path(friend), method: :delete, remote: true  %></span>
+				<%= link_to "<i class=\"glyphicon glyphicon-minus\"></i><i class=\"glyphicon glyphicon-user\"></i>".html_safe, friend_path(friend), method: :delete, remote: true %>
 			</td>
 		</tr>
 	<% end %>

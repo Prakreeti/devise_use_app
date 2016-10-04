@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, controllers: { registrations: 'registrations',
                      omniauth_callbacks: "users/omniauth_callbacks" }
                      
@@ -46,15 +45,18 @@ Rails.application.routes.draw do
   resources :tags, only: [:index, :show]
   get 'tagged', to: 'posts#tagged'
 
-  resources :subscribers, only: [:create, :destroy] do
-    collection do
-      get 'unsubscribe'
+  resources :subscribers, only: [:create] do
+    member do
+      get :unsubscribe
     end
   end
+
   
   post '/rate' => 'rater#create', :as => 'rate'
 
   get 'home', to: 'users#dashboard'
+
+  mount Ckeditor::Engine => '/ckeditor'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

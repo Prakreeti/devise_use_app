@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-7 col-md-offset-3">
     <div id="flash_notice"><div class="notice"></div></div>
     <div class="search-form">
       <%= form_tag(users_path, method: "get", id: "search-user-form") do %>
@@ -12,7 +12,7 @@
     <h1 id="title">Listing All Users</h1>
     <% if @users.any? %>
       <div id="users">
-      	<%= render partial: "users/shared/show_all_users", locals: {users: @users} %>
+      	<%= render partial: "users/shared/show_all_users", locals: {users_collection: @users_collection} %>
       </div>
     <% else %>
       No users found

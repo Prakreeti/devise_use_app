@@ -31,23 +31,21 @@
           </span>
         <% end %>
       </div>
+      
       <%= link_to "Reply", "javascript:void(0);", 
                   id: "addcomment_#{comment.id}", class: "reply"%> 
 
-      <%= link_to "Reply2", new_post_comment_path(@post, comment), 
-                  id: "addcomment_#{comment.id}", class: "reply",
-                                                    remote: true%> 
-
-      <% if comment.user_id == current_user.id %>
-        <div class="comment-options"> 
-          <span>
-            <%= link_to "<i class=\"glyphicon glyphicon-pencil\"></i>".html_safe, edit_post_comment_path(@post, comment), remote: true %>
-
-            <%= link_to "<i class=\"glyphicon glyphicon-trash\"></i>".html_safe, [comment.post, comment], method: :delete,
+      <div class="comment-options">             
+        <% if comment.user_id == current_user.id %>
+          <%= link_to "<i class=\"glyphicon glyphicon-pencil\"></i>".html_safe, edit_post_comment_path(@post, comment), remote: true %>
+        <% end %>
+        
+        <% if comment.post.user == current_user || comment.user_id == current_user.id %>
+          <%= link_to "<i class=\"glyphicon glyphicon-trash\"></i>".html_safe, [comment.post, comment], method: :delete,
                 data: { confirm: 'Are you sure?' }, remote: true %>
-          </span>
-        </div>
-      <% end %>
+        <% end %> 
+      </div>
+     
 
       <% if (comment.children.length > 0) %>
         <%= link_to "All Replies", "javascript:void(0);", class: "comment-reply", id: "comment_show_#{comment.id}" %>

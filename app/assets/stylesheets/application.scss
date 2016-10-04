@@ -280,6 +280,11 @@
   max-height: 300px;
 }
 
+@media only screen and (max-width: 479px){
+  .friends { width: 30%; }
+}
+
+
 #subscribers_div {
   position: fixed;
   right: 0px;
@@ -339,7 +344,7 @@ table {
 #post-heading {
   margin-top: 0px;
   a:hover {
-    color: green;
+    color: #7D3C98;
   }
 }
 
@@ -522,6 +527,7 @@ table {
 
 .drop-down-post{
   float: right;
+  margin-top: -10px;
 }
 
 .dropdown-menu{
@@ -544,4 +550,26 @@ table {
 
 .comment-options {
   float: right;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  
+  padding: 2%;
+  flex: 2;
+  
+  background-color: #FFF;
+  box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.25);
+}
+
+.product-info {
+  margin-top: auto;
+  padding-top: 20px;
+  text-align: center;
 }

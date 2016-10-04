@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   has_many :followed_relationships,  class_name: "Relationship",
                               foreign_key: "followed_id", dependent: :destroy
   has_many :follows, through: :follow_relationships, source: :followed
-  has_many :followers,through: :followed_relationships, source: :follower
+  has_many :followers, through: :followed_relationships, source: :follower
 
   has_many :likes, dependent: :destroy
   has_many :likes_post, through: :likes,
@@ -88,6 +88,18 @@ class User < ActiveRecord::Base
                      OR user_id = :user_id", user_id: id)
   end
 
+  def follow_relation(user)
+    self.follow_relationships.find_by(followed_id: user)
+  end
+
+  def friendship(friend)
+    self.friends.where(id: friend.id)
+  end
+
+  def friend_request(friend)
+    self.friend_requests.find_by(friend_id: friend)
+  end
+
   def has_friend?(friend)
     self.friends.where(id: friend.id).present?
   end
@@ -98,7 +110,7 @@ class User < ActiveRecord::Base
   end
 
   def has_sent_friend_request_to?(friend)
-    self.friend_requests.where(:friend_id => friend).present?
+    self.friend_requests.find_by(friend_id: friend).present?
   end
 
   def is_following?(user)

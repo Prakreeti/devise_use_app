@@ -11,16 +11,12 @@ class SubscribersController < ApplicationController
   end
 
   def unsubscribe
-  end
-
-  def destroy
-    @subscriber = Subscriber.find_by(email: params[:subscriber][:email])
+    @subscriber = Subscriber.find_by(id: params[:id])
     if @subscriber.destroy
       flash[:notice] = "You have unsubscribed."
       redirect_to root_path
     end
   end
-
 
   private
 

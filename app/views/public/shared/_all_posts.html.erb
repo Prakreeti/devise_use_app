@@ -1,0 +1,14 @@
+<% posts.each do |post| %>
+	<div class="pin box1 animated pulse">
+		<div>
+			<h2 id="post-heading"><%= link_to "#{post.title}", post_path(post) %></h2>
+		</div>
+		<div>
+			<%= post.user.name %>
+		</div>
+		<div><%= post.content.html_safe %></div>
+		<% if post.image_file_name != nil %>
+			<div><%= image_tag(post.image.url(:large)) %></div>
+		<% end %>
+	</div>
+<% end %>

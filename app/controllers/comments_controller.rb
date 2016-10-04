@@ -1,7 +1,8 @@
 class CommentsController < ApplicationController
 	before_action :authenticate_user!
-	before_action :set_post, only:[:new, :create, :destroy, :show, :update, :edit]
-
+	before_action :set_post, only:[:new, :create, :show]
+	before_action :check_user, only:[:edit, :update]
+	before_action :check_user_for_destroy, only:[:destroy]
 	#creates the comment
 	def new
 		@comment = Comment.new
@@ -81,4 +82,23 @@ class CommentsController < ApplicationController
 			end
 		end
 	end
+
+	def check_user
+		@post = set_post
+		@comment = @post.comments.find_by(id: params[:id])
+    if @comment.user_id != current_user.id
+      redirect_to :back,
+      :flash => { :notice => "You cannot change other's comments." }
+    end
+  end
+
+  def check_user_for_destroy
+  	@post = set_post
+		@comment = @post.comments.find_by(id: params[:id])
+		if @comment.user_id != current_user.id || @post.user_id != current_user.id
+      redirect_to :back,
+      :flash => { :notice => "You cannot change other's comments." }
+    end
+  end
+
 end
